@@ -1,29 +1,27 @@
-{% extends "::base.html.twig" %}
+{% extends "AppBundle::panel_layout.html.twig" %}
 
-{% block body %}
+{% block panel_body %}
+
 	<div class="row">
-		<h1>Panel</h1>
+		<div class="col-md-12">
+			<h3>Clé publique</h3>
+			<p>{{ user.publicKey }}</p>
+
+			<hr>
+
+			<h3>Clé privée</h3>
+			<p>{{ user.privateKey }}</p>
+
+			<hr>
+
+			<h3>Test crypt</h3>
+			<p>{{ test }}</p>
+
+			<hr>
+
+			<h3>Test decrypt</h3>
+			<p>{{ test2 }}</p>
+		</div>
 	</div>
 
-	<div class="row text-center">
-		<a class="btn btn-primary" href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
-	</div>
-
-	<h3>Clé publique</h3>
-	<p>{{ user.publicKey }}</p>
-
-	<hr>
-
-	<h3>Clé privée</h3>
-	<p>{{ user.privateKey }}</p>
-
-	<hr>
-
-	<h3>Test crypt</h3>
-	<p>{{ test }}</p>
-
-	<hr>
-
-	<h3>Test decrypt</h3>
-	<p>{{ test2 }}</p>
 {% endblock %}
