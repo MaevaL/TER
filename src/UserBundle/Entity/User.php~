@@ -59,6 +59,11 @@ class User extends BaseUser
      */
     private $lastname;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\UE", cascade={"persist"})
+     */
+    private $ues;
+
     public function __construct()
     {
         parent::__construct();
@@ -122,5 +127,77 @@ class User extends BaseUser
     public function getPrivateKey()
     {
         return $this->privateKey;
+    }
+
+    /**
+     * Set numEtu
+     *
+     * @param string $numEtu
+     *
+     * @return User
+     */
+    public function setNumEtu($numEtu)
+    {
+        $this->numEtu = $numEtu;
+
+        return $this;
+    }
+
+    /**
+     * Get numEtu
+     *
+     * @return string
+     */
+    public function getNumEtu()
+    {
+        return $this->numEtu;
+    }
+
+    /**
+     * Set firstname
+     *
+     * @param string $firstname
+     *
+     * @return User
+     */
+    public function setFirstname($firstname)
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    /**
+     * Get firstname
+     *
+     * @return string
+     */
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * Set lastname
+     *
+     * @param string $lastname
+     *
+     * @return User
+     */
+    public function setLastname($lastname)
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    /**
+     * Get lastname
+     *
+     * @return string
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
     }
 }

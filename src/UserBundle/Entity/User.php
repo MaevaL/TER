@@ -59,6 +59,11 @@ class User extends BaseUser
      */
     private $lastname;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\UE", cascade={"persist"})
+     */
+    private $ues;
+
     public function __construct()
     {
         parent::__construct();
@@ -194,5 +199,39 @@ class User extends BaseUser
     public function getLastname()
     {
         return $this->lastname;
+    }
+
+    /**
+     * Add ue
+     *
+     * @param \AppBundle\Entity\UE $ue
+     *
+     * @return User
+     */
+    public function addUe(\AppBundle\Entity\UE $ue)
+    {
+        $this->ues[] = $ue;
+
+        return $this;
+    }
+
+    /**
+     * Remove ue
+     *
+     * @param \AppBundle\Entity\UE $ue
+     */
+    public function removeUe(\AppBundle\Entity\UE $ue)
+    {
+        $this->ues->removeElement($ue);
+    }
+
+    /**
+     * Get ues
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUes()
+    {
+        return $this->ues;
     }
 }

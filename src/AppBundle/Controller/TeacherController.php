@@ -31,8 +31,27 @@ class TeacherController extends Controller
         if($form->isSubmitted() & $form->isValid()) {
             var_dump("formulaire validé");
 
+
+            $file = $form->getData()['gradeFile'];
+
+            //Sauvegarde temporaire du fichier
+            $filename = uniqid().".".$file->getClientOriginalExtension();
+            $path = __DIR__.'/../../../web/upload';
+            $file->move($path, $filename);
+
+            //Analyse du fichier
+            $CSVToArray = $this->get('app.csvtoarray');
+            $data = $CSVToArray->convert($path."/".$filename, ',');
+
+            //Suppression du fichier après analyse
+            unlink($path."/".$filename);
+
+            var_dump($data);
+
+            /*
             $this->addFlash('success', 'La liste de notes a bien été ajoutée.');
             return $this->redirectToRoute('teacher_panel');
+            */
         }
 
         return $this->render("AppBundle:Teacher:addGradeFile.html.twig", array(
