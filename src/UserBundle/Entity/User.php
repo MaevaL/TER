@@ -4,6 +4,8 @@ namespace UserBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Sinner\Phpseclib\Crypt\Crypt_RSA as CryptRSA;
+use Sinner\Phpseclib\Crypt\Crypt_RSA;
 
 /**
  * User
@@ -22,6 +24,30 @@ class User extends BaseUser
      */
     protected $id;
 
+    /**
+     * @var string $publicKey
+     *
+     * @ORM\Column(name="publicKey", type="text", nullable=false)
+     */
+    private $publicKey;
+
+    /**
+     * @var string $privateKey
+     *
+     * @ORM\Column(name="privateKey", type="text", nullable=false)
+     */
+    private $privateKey;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $crypt_rsa = new Crypt_RSA();
+        $keys = $crypt_rsa->createKey();
+
+        $this->setPrivateKey($keys['privatekey']);
+        $this->setPublicKey($keys['publickey']);
+    }
 
     /**
      * Get id
@@ -33,9 +59,51 @@ class User extends BaseUser
         return $this->id;
     }
 
-    public function __construct()
+    /**
+     * Set publicKey
+     *
+     * @param string $publicKey
+     *
+     * @return User
+     */
+    public function setPublicKey($publicKey)
     {
-        parent::__construct();
+        $this->publicKey = $publicKey;
+
+        return $this;
+    }
+
+    /**
+     * Get publicKey
+     *
+     * @return string
+     */
+    public function getPublicKey()
+    {
+        return $this->publicKey;
+    }
+
+    /**
+     * Set privateKey
+     *
+     * @param string $privateKey
+     *
+     * @return User
+     */
+    public function setPrivateKey($privateKey)
+    {
+        $this->privateKey = $privateKey;
+
+        return $this;
+    }
+
+    /**
+     * Get privateKey
+     *
+     * @return string
+     */
+    public function getPrivateKey()
+    {
+        return $this->privateKey;
     }
 }
-
