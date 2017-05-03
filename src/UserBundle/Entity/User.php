@@ -4,7 +4,7 @@ namespace UserBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
-use Sinner\Phpseclib\Crypt\Crypt_RSA as CryptRSA;
+
 use Sinner\Phpseclib\Crypt\Crypt_RSA;
 
 /**
@@ -45,8 +45,10 @@ class User extends BaseUser
         $crypt_rsa = new Crypt_RSA();
         $keys = $crypt_rsa->createKey();
 
-        $this->setPrivateKey($keys['privatekey']);
+        //TODO : Vérifier que la clé est unique
+        //TODO : Crypter avec le mot de passe
         $this->setPublicKey($keys['publickey']);
+        $this->setPrivateKey($keys['privatekey']);
     }
 
     /**
