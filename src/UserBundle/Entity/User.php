@@ -38,17 +38,32 @@ class User extends BaseUser
      */
     private $privateKey;
 
+    /**
+     * @var string $numEtu
+     *
+     * @ORM\Column(name="numEtu", type="string",length=255, nullable=true)
+     */
+    private $numEtu;
+
+    /**
+     * @var string $firstname
+     *
+     * @ORM\Column(name="firstname", type="string", length=255, nullable=false)
+     */
+    private $firstname;
+
+    /**
+     * @var string $lastname
+     *
+     * @ORM\Column(name="lastname", type="string", length=255, nullable=false)
+     */
+    private $lastname;
+
     public function __construct()
     {
         parent::__construct();
 
-        $crypt_rsa = new Crypt_RSA();
-        $keys = $crypt_rsa->createKey();
 
-        //TODO : Vérifier que la clé est unique
-        //TODO : Crypter avec le mot de passe
-        $this->setPublicKey($keys['publickey']);
-        $this->setPrivateKey($keys['privatekey']);
     }
 
     /**
@@ -107,5 +122,77 @@ class User extends BaseUser
     public function getPrivateKey()
     {
         return $this->privateKey;
+    }
+
+    /**
+     * Set numEtu
+     *
+     * @param string $numEtu
+     *
+     * @return User
+     */
+    public function setNumEtu($numEtu)
+    {
+        $this->numEtu = $numEtu;
+
+        return $this;
+    }
+
+    /**
+     * Get numEtu
+     *
+     * @return string
+     */
+    public function getNumEtu()
+    {
+        return $this->numEtu;
+    }
+
+    /**
+     * Set firstname
+     *
+     * @param string $firstname
+     *
+     * @return User
+     */
+    public function setFirstname($firstname)
+    {
+        $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    /**
+     * Get firstname
+     *
+     * @return string
+     */
+    public function getFirstname()
+    {
+        return $this->firstname;
+    }
+
+    /**
+     * Set lastname
+     *
+     * @param string $lastname
+     *
+     * @return User
+     */
+    public function setLastname($lastname)
+    {
+        $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    /**
+     * Get lastname
+     *
+     * @return string
+     */
+    public function getLastname()
+    {
+        return $this->lastname;
     }
 }

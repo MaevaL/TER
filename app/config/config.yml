@@ -79,3 +79,9 @@ fos_user:
   from_email:
       address:        noreply@example.com
       sender_name:    App
+
+services:
+    app.rsa_key_manager:
+        class:    AppBundle\Service\RSAKeyManager
+        arguments: []
+        
