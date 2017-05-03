@@ -1,3 +1,7 @@
+app_ue:
+    resource: "@AppBundle/Controller/UEController.php"
+    type:     annotation
+
 user:
     resource: "@UserBundle/Controller/"
     type:     annotation

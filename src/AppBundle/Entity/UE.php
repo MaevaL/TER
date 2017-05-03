@@ -64,9 +64,6 @@ class UE
     {
         $this->name = $name;
 
-        $slugify = new Slugify();
-        $this->slug = $slugify->slugify($name);
-
         return $this;
     }
 
