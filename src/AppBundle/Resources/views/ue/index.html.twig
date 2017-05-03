@@ -1,0 +1,43 @@
+{% extends 'AppBundle::panel_layout.html.twig' %}
+
+{% block panel_body %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Liste des UEs</h1>
+
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>Slug</th>
+                    <th>Crédits</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for uE in uEs %}
+                    <tr>
+                        <td><a href="{{ path('ue_show', { 'id': uE.id }) }}">{{ uE.id }}</a></td>
+                        <td>{{ uE.name }}</td>
+                        <td>{{ uE.slug }}</td>
+                        <td>{{ uE.credits }}</td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="{{ path('ue_show', { 'id': uE.id }) }}">Voir</a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('ue_edit', { 'id': uE.id }) }}">Editer</a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <a class="btn btn-success" href="{{ path('ue_new') }}">Ajouter une UE</a>
+        </div>
+    </div>
+{% endblock %}

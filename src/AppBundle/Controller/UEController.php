@@ -11,7 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component
 /**
  * Ue controller.
  *
- * @Route("ue")
+ * @Route("/admin/ue")
  */
 class UEController extends Controller
 {
@@ -27,7 +27,7 @@ class UEController extends Controller
 
         $uEs = $em->getRepository('AppBundle:UE')->findAll();
 
-        return $this->render('ue/index.html.twig', array(
+        return $this->render('AppBundle:ue:index.html.twig', array(
             'uEs' => $uEs,
         ));
     }
@@ -55,7 +55,7 @@ class UEController extends Controller
             return $this->redirectToRoute('ue_show', array('id' => $uE->getId()));
         }
 
-        return $this->render('ue/new.html.twig', array(
+        return $this->render('AppBundle:ue:new.html.twig', array(
             'uE' => $uE,
             'form' => $form->createView(),
         ));
@@ -71,7 +71,7 @@ class UEController extends Controller
     {
         $deleteForm = $this->createDeleteForm($uE);
 
-        return $this->render('ue/show.html.twig', array(
+        return $this->render('AppBundle:ue:show.html.twig', array(
             'uE' => $uE,
             'delete_form' => $deleteForm->createView(),
         ));
@@ -97,7 +97,7 @@ class UEController extends Controller
             return $this->redirectToRoute("ue_index");
         }
 
-        return $this->render('ue/edit.html.twig', array(
+        return $this->render('AppBundle:ue:edit.html.twig', array(
             'uE' => $uE,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),

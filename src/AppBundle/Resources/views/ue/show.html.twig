@@ -1,0 +1,40 @@
+{% extends 'AppBundle::panel_layout.html.twig' %}
+
+{% block panel_body %}
+    <div class="row">
+        <div class="col-md-12">
+
+            <h1>UE : {{ uE.name }}</h1>
+
+            <a class="btn btn-primary" href="{{ path('ue_index') }}">Retour à la liste des UEs</a>
+            <a class="btn btn-primary" href="{{ path('ue_edit', { 'id': uE.id }) }}">Editer</a>
+            <hr>
+            <table class="table table-hover">
+                <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ uE.id }}</td>
+                </tr>
+                <tr>
+                    <th>Nom</th>
+                    <td>{{ uE.name }}</td>
+                </tr>
+                <tr>
+                    <th>Slug</th>
+                    <td>{{ uE.slug }}</td>
+                </tr>
+                <tr>
+                    <th>Crédits</th>
+                    <td>{{ uE.credits }}</td>
+                </tr>
+                </tbody>
+            </table>
+
+
+            {{ form_start(delete_form) }}
+                <input class="btn btn-danger" type="submit" value="Supprimer">
+            {{ form_end(delete_form) }}
+
+        </div>
+    </div>
+{% endblock %}
