@@ -19,8 +19,14 @@
     {% block stylesheets %}{% endblock %}
 
     <!-- Custom styles for this template -->
-    <link href="{{ asset('vendor/theme/css/style.css') }}" rel="stylesheet">
-    <link href="{{ asset('vendor/theme/css/style-responsive.css') }}" rel="stylesheet">
+    {% stylesheets
+    'less/style.less'
+    'less/style-responsive.less'
+    filter='lessphp'
+    output='css/main.css'
+    %}
+    <link href="{{ asset_url }}" rel="stylesheet" media="screen" type="text/css" />
+    {% endstylesheets %}
 
     <script src="{{ asset('vendor/theme/js/chart-master/Chart.js') }}"></script>
 
@@ -143,7 +149,7 @@
 
 <!--script for this page-->
 <script src="{{ asset('vendor/theme/js/sparkline-chart.js') }}"></script>
-<script src="{{ asset('vendor/theme/assets/js/zabuto_calendar.js') }}"></script>
+<script src="{{ asset('vendor/theme/js/zabuto_calendar.js') }}"></script>
 
 <script type="application/javascript">
     $(document).ready(function () {
