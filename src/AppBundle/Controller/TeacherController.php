@@ -29,9 +29,6 @@ class TeacherController extends Controller
 
         $form->handleRequest($request);
         if($form->isSubmitted() & $form->isValid()) {
-            var_dump("formulaire validé");
-
-
             $file = $form->getData()['gradeFile'];
 
             //Sauvegarde temporaire du fichier
@@ -48,8 +45,9 @@ class TeacherController extends Controller
 
             var_dump($data);
 
-            /*
+
             $this->addFlash('success', 'La liste de notes a bien été ajoutée.');
+            /*
             return $this->redirectToRoute('teacher_panel');
             */
         }

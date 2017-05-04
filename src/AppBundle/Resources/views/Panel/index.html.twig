@@ -2,25 +2,33 @@
 
 {% block panel_body %}
 
-	<div class="row">
-		<div class="col-md-12">
-			<h3>Clé publique</h3>
-			<p>{{ user.publicKey }}</p>
+	<div class="showback">
+		<div class="row">
+			<div class="col-lg-12">
+				<h3><i class="fa fa-angle-right"></i> Bonjour {{ app.user.lastname }} {{ app.user.firstname }},</h3>
+			</div>
+		</div>
 
-			<hr>
+		<div class="row">
+			<div class="col-lg-12">
+				<h3>Clé publique</h3>
+				<p>{{ user.publicKey }}</p>
 
-			<h3>Clé privée</h3>
-			<p>{{ user.privateKey }}</p>
+				<hr>
 
-			<hr>
+				<h3>Clé privée</h3>
+				<p>{{ user.privateKey }}</p>
 
-			<h3>Test crypt</h3>
-			<p>{{ test }}</p>
+				<hr>
 
-			<hr>
+				<h3>Test crypt</h3>
+				<p>{{ test }}</p>
 
-			<h3>Test decrypt</h3>
-			<p>{{ test2 }}</p>
+				<hr>
+
+				<h3>Test decrypt</h3>
+				<p>{{ test2 }}</p>
+			</div>
 		</div>
 	</div>
 

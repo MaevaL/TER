@@ -1,4 +1,6 @@
 @amu-blue: #00CCFF;
+@amu-dark: #00acde;
+@amu-light: #1fd6ff;
 @amu-yellow:#FFCC00;
 @color_1: #797979;
 @color_2: #fff;
@@ -222,6 +224,31 @@ a {
 }
 .bg-theme04 {
     background-color: @background_color_5;
+}
+.btn-theme-amu {
+    color: @color_2;
+    background-color: @amu-blue;
+    border-color: @amu-light;
+    &:hover {
+        color: @color_2;
+        background-color: @amu-dark;
+        border-color: @amu-light;
+    }
+    &:focus {
+        color: @color_2;
+        background-color: @amu-dark;
+        border-color: @amu-light;
+    }
+    &:active {
+        color: @color_2;
+        background-color: @amu-dark;
+        border-color: @amu-light;
+    }
+}
+.btn-theme.active {
+    color: @color_2;
+    background-color: @amu-dark;
+    border-color: @amu-light;
 }
 .btn-theme {
     color: @color_2;

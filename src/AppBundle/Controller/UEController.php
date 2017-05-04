@@ -52,6 +52,7 @@ class UEController extends Controller
             $em->persist($uE);
             $em->flush();
 
+            $this->addFlash('success', "L'UE a bien été ajoutée !");
             return $this->redirectToRoute('ue_show', array('id' => $uE->getId()));
         }
 
@@ -94,6 +95,7 @@ class UEController extends Controller
             $uE->setSlug($slugify->slugify($uE->getName()));
             $this->getDoctrine()->getManager()->flush();
 
+            $this->addFlash('success', "L'UE a bien été éditée !");
             return $this->redirectToRoute("ue_index");
         }
 
@@ -121,6 +123,7 @@ class UEController extends Controller
             $em->flush();
         }
 
+        $this->addFlash('success', "L'UE a bien été supprimée !");
         return $this->redirectToRoute('ue_index');
     }
 

@@ -18,7 +18,6 @@ class GradeFileType extends AbstractType
                 'label' => 'Fichier de notes (CSV)',
                 'constraints' => array(new CSV())
             ))
-            ->add('envoyer', SubmitType::class)
         ;
     }
 

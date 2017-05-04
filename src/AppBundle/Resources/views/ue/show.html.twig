@@ -1,40 +1,55 @@
 {% extends 'AppBundle::panel_layout.html.twig' %}
 
 {% block panel_body %}
-    <div class="row">
-        <div class="col-md-12">
+    <div class="showback">
 
-            <h1>UE : {{ uE.name }}</h1>
-
-            <a class="btn btn-primary" href="{{ path('ue_index') }}">Retour à la liste des UEs</a>
-            <a class="btn btn-primary" href="{{ path('ue_edit', { 'id': uE.id }) }}">Editer</a>
-            <hr>
-            <table class="table table-hover">
-                <tbody>
-                <tr>
-                    <th>Id</th>
-                    <td>{{ uE.id }}</td>
-                </tr>
-                <tr>
-                    <th>Nom</th>
-                    <td>{{ uE.name }}</td>
-                </tr>
-                <tr>
-                    <th>Slug</th>
-                    <td>{{ uE.slug }}</td>
-                </tr>
-                <tr>
-                    <th>Crédits</th>
-                    <td>{{ uE.credits }}</td>
-                </tr>
-                </tbody>
-            </table>
-
-
-            {{ form_start(delete_form) }}
-                <input class="btn btn-danger" type="submit" value="Supprimer">
-            {{ form_end(delete_form) }}
-
+        <div class="row">
+            <div class="col-lg-12">
+                <h3><i class="fa fa-angle-right"></i> UE : {{ uE.name }}</h3>
+            </div>
         </div>
+
+        <br>
+        <div class="row">
+            <div class="col-lg-6">
+                <a class="btn btn-theme-amu" href="{{ path('ue_index') }}"><i class="fa fa-caret-left" aria-hidden="true"></i> Retour à la liste des UEs</a>
+            </div>
+
+            <div class="col-lg-6 text-right">
+                {{ form_start(delete_form) }}
+                <button class="btn btn-danger" type="submit"><i class="fa fa-trash" aria-hidden="true"></i> Supprimer</button>
+                {{ form_end(delete_form) }}
+            </div>
+        </div>
+        <br>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <th>Nom</th>
+                        <td>{{ uE.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Slug</th>
+                        <td>{{ uE.slug }}</td>
+                    </tr>
+                    <tr>
+                        <th>Crédits</th>
+                        <td>{{ uE.credits }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <a class="btn btn-success" href="{{ path('ue_edit', { 'id': uE.id }) }}"><i class="fa fa-pencil" aria-hidden="true"></i> Editer</a>
+            </div>
+        </div>
+
     </div>
 {% endblock %}

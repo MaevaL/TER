@@ -1,43 +1,48 @@
 {% extends 'AppBundle::panel_layout.html.twig' %}
 
 {% block panel_body %}
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Liste des UEs</h1>
 
-            <table class="table table-hover">
-                <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Nom</th>
-                    <th>Slug</th>
-                    <th>Crédits</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for uE in uEs %}
+    <div class="showback">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3><i class="fa fa-angle-right"></i> Liste des UEs</h3>
+            </div>
+        </div>
+
+        <br>
+        <div class="row">
+            <div class="col-lg-12">
+                <a class="btn btn-success" href="{{ path('ue_new') }}"><i class="fa fa-user-plus" aria-hidden="true"></i> Ajouter une UE</a>
+            </div>
+        </div>
+        <br>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-hover">
+                    <thead>
                     <tr>
-                        <td><a href="{{ path('ue_show', { 'id': uE.id }) }}">{{ uE.id }}</a></td>
-                        <td>{{ uE.name }}</td>
-                        <td>{{ uE.slug }}</td>
-                        <td>{{ uE.credits }}</td>
-                        <td>
-                            <ul>
-                                <li>
-                                    <a href="{{ path('ue_show', { 'id': uE.id }) }}">Voir</a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('ue_edit', { 'id': uE.id }) }}">Editer</a>
-                                </li>
-                            </ul>
-                        </td>
+                        <th>Nom</th>
+                        <th>Slug</th>
+                        <th>Crédits</th>
+                        <th>Actions</th>
                     </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-
-            <a class="btn btn-success" href="{{ path('ue_new') }}">Ajouter une UE</a>
+                    </thead>
+                    <tbody>
+                    {% for uE in uEs %}
+                        <tr>
+                            <td>{{ uE.name }}</td>
+                            <td>{{ uE.slug }}</td>
+                            <td>{{ uE.credits }}</td>
+                            <td>
+                                <a class="btn btn-theme-amu" href="{{ path('ue_show', { 'id': uE.id }) }}"><i class="fa fa-search-plus" aria-hidden="true"></i></a>
+                                <a class="btn btn-success" href="{{ path('ue_edit', { 'id': uE.id }) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 {% endblock %}

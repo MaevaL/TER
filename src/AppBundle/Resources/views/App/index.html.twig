@@ -1,44 +1,56 @@
-{% extends "::base.html.twig" %}
+{% extends "::layout.html.twig" %}
 
-{% block body %}
-	<div class="row">
-		<h1>Accueil</h1>		
-	</div>
+{% block layout_content %}
+	<!-- **********************************************************************************************************************************************************
+      MAIN CONTENT
+      *********************************************************************************************************************************************************** -->
 
-	<div class="row text-center">
-		<input class="btn btn-success"  data-toggle="modal" data-target="#login-modal" type="button" value="Se connecter">
-		<input class="btn btn-success"  data-toggle="modal" data-target="#register-modal" type="button" value="S'enregistrer">
-	</div>
+	<div id="login-page">
+		<div class="container">
 
-	<div id="login-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-  		<div class="modal-dialog modal-md" role="document">
-    		<div class="modal-content">
-      			<div class="modal-header">
-			    	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			    	<h4 class="modal-title" id="myModalLabel">Connexion</h4>
-			    </div>
-			    <div class="modal-body">
+			<div class="form-login">
+				<h2 class="form-login-heading">Se connecter</h2>
+				<div class="login-wrap">
+                    {{ render(controller('FOSUserBundle:Security:login')) }}
 
-			    	{{ render(controller('FOSUserBundle:Security:login')) }}
-			    	
-			    </div>
-    		</div>
-  		</div>
+					<hr>
+
+					<div class="registration">
+						Vous n'avez pas de compte ?<br/>
+						<a class="" href="#" data-toggle="modal" data-target="#register-modal">
+							Créer un compte
+						</a>
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
 	</div>
 
 	<div id="register-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-  		<div class="modal-dialog modal-md" role="document">
-    		<div class="modal-content">
-      			<div class="modal-header">
-			    	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			    	<h4 class="modal-title" id="myModalLabel">Inscription</h4>
-			    </div>
-			    <div class="modal-body">
-			    
-			    	{{ render(controller('FOSUserBundle:Registration:register')) }}
+		<div class="modal-dialog modal-md" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Inscription</h4>
+				</div>
+				<div class="modal-body">
 
-			    </div>
-    		</div>
-  		</div>
+                    {{ render(controller('FOSUserBundle:Registration:register')) }}
+
+				</div>
+			</div>
+		</div>
 	</div>
+{% endblock %}
+
+{% block javascripts %}
+	<!--BACKSTRETCH-->
+	<!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
+	<script type="text/javascript" src="{{ asset('vendor/theme/js/jquery.backstretch.min.js') }}"></script>
+	<script>
+        $.backstretch("{{ asset('vendor/theme/img/login-bg.jpg') }}", {speed: 500});
+	</script>
 {% endblock %}

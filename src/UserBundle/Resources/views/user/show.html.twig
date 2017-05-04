@@ -2,61 +2,81 @@
 
 {% block panel_body %}
 
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Utilisateur : {{ user.firstname }} {{ user.lastname }}</h1>
+    <div class="showback">
 
-            <a class="btn btn-primary" href="{{ path('user_index') }}">Retour à la liste des utilisateurs</a>
+        <div class="row">
+            <div class="col-lg-12">
+                <h3><i class="fa fa-angle-right"></i> Utilisateur : {{ user.firstname }} {{ user.lastname }}</h3>
+            </div>
+        </div>
 
-            <table class="table table-hover">
-                <tbody>
-                <tr>
-                    <th>Prénom</th>
-                    <td>{{ user.firstname }}</td>
-                </tr>
-                <tr>
-                    <th>Nom</th>
-                    <td>{{ user.lastname }}</td>
-                </tr>
-                <tr>
-                    <th>Numéro Etudiant</th>
-                    <td>{{ user.numEtu }}</td>
-                </tr>
-                <tr>
-                    <th>Email</th>
-                    <td>{{ user.email }}</td>
-                </tr>
-                <tr>
-                    <th>Rôles</th>
-                    <td>
-                        {% for role in user.roles %}
-                            {% if role == "ROLE_SUPER_ADMIN" %}
-                                Super Utilisateur
-                            {% else %}
-                                {% if role == "ROLE_ADMIN" %}
-                                        Professeur
+        <br>
+        <div class="row">
+            <div class="col-lg-6">
+                <a class="btn btn-theme-amu" href="{{ path('user_index') }}"><i class="fa fa-caret-left" aria-hidden="true"></i> Retour à la liste des utilisateurs</a>
+            </div>
+
+            <div class="col-lg-6 text-right">
+                {{ form_start(delete_form) }}
+                <button class="btn btn-danger" type="submit"><i class="fa fa-trash" aria-hidden="true"></i> Supprimer</button>
+                {{ form_end(delete_form) }}
+            </div>
+        </div>
+        <br>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <th>Prénom</th>
+                        <td>{{ user.firstname }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nom</th>
+                        <td>{{ user.lastname }}</td>
+                    </tr>
+                    <tr>
+                        <th>Numéro Etudiant</th>
+                        <td>{{ user.numEtu }}</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    <tr>
+                        <th>Rôles</th>
+                        <td>
+                            {% for role in user.roles %}
+                                {% if role == "ROLE_SUPER_ADMIN" %}
+                                    Super Utilisateur
                                 {% else %}
-                                    {% if role == "ROLE_USER" %}
-                                        Etudiant
+                                    {% if role == "ROLE_ADMIN" %}
+                                        Professeur
+                                    {% else %}
+                                        {% if role == "ROLE_USER" %}
+                                            Etudiant
+                                        {% endif %}
                                     {% endif %}
                                 {% endif %}
-                            {% endif %}
 
-                            {% if loop.index != loop.last %}
-                                 |
-                            {% endif %}
+                                {% if loop.index != loop.last %}
+                                    |
+                                {% endif %}
 
-                        {% endfor %}
-                    </td>
-                </tr>
+                            {% endfor %}
+                        </td>
+                    </tr>
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-                <a class="btn btn-primary" href="{{ path('user_edit', { 'id': user.id }) }}">Editer</a>
-                {{ form_start(delete_form) }}
-                    <input class="btn btn-danger" type="submit" value="Supprimer">
-                {{ form_end(delete_form) }}
+        <div class="row">
+            <div class="col-lg-12">
+                <a class="btn btn-success" href="{{ path('user_edit', { 'id': user.id }) }}"><i class="fa fa-pencil" aria-hidden="true"></i> Editer</a>
+            </div>
         </div>
     </div>
 {% endblock %}

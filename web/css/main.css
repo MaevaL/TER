@@ -68,6 +68,31 @@ a:focus {
 .bg-theme04 {
   background-color: #ed5565;
 }
+.btn-theme-amu {
+  color: #fff;
+  background-color: #00CCFF;
+  border-color: #1fd6ff;
+}
+.btn-theme-amu:hover {
+  color: #fff;
+  background-color: #00acde;
+  border-color: #1fd6ff;
+}
+.btn-theme-amu:focus {
+  color: #fff;
+  background-color: #00acde;
+  border-color: #1fd6ff;
+}
+.btn-theme-amu:active {
+  color: #fff;
+  background-color: #00acde;
+  border-color: #1fd6ff;
+}
+.btn-theme.active {
+  color: #fff;
+  background-color: #00acde;
+  border-color: #1fd6ff;
+}
 .btn-theme {
   color: #fff;
   background-color: #68dff0;

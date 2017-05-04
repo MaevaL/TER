@@ -1,15 +1,22 @@
 {% extends "AppBundle::panel_layout.html.twig" %}
 
 {% block panel_body %}
-
-	<div class="row">
-		<h3>Prof : Administration</h3>
-	</div>
-
-	<div class="row">
-		<div class="col-md-12">
-			<a class="btn btn-success" href="{{ path('teacher_panel_add_grade_file') }}">Ajouter un fichier de notes</a>
+	<div class="showback">
+		<div class="row">
+			<div class="col-lg-12">
+				<h3><i class="fa fa-angle-right"></i> Gestion des notes</h3>
+			</div>
 		</div>
+
+		<br>
+		<div class="row">
+			<div class="col-md-12">
+				<a class="btn btn-success" href="{{ path('teacher_panel_add_grade_file') }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Ajouter un fichier de notes</a>
+			</div>
+		</div>
+		<br>
 	</div>
+
+
 
 {% endblock %}
