@@ -79,4 +79,13 @@ fos_user:
   from_email:
       address:        noreply@example.com
       sender_name:    App
-        
+
+assetic:
+    debug: '%kernel.debug%'
+    use_controller: '%kernel.debug%'
+    filters:
+        cssrewrite: ~
+        lessphp:
+            apply_to: ".less$"
+            #formatter: "compressed"
+            #preserve_comments: false
