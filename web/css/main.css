@@ -431,7 +431,6 @@ ul.sidebar-menu li a:hover i {
   color: #fff;
 }
 ul.sidebar-menu li a:focus {
-  background: #68dff0;
   color: #fff;
   display: block;
   -webkit-transition: all 0.3s ease;
