@@ -1,0 +1,17 @@
+{% extends 'AppBundle::panel_layout.html.twig' %}
+
+{% block panel_body %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Ajouter une UE</h1>
+            <a class="btn btn-primary" href="{{ path('ue_index') }}">Retour à la liste des UEs</a>
+
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <input class="btn btn-primary" type="submit" value="Ajouter" />
+            {{ form_end(form) }}
+
+        </div>
+    </div>
+
+{% endblock %}
