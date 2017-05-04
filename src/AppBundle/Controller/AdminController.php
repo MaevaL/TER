@@ -11,11 +11,5 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AdminController extends Controller
 {
-    /**
-     * @Route("/", name="admin_homepage")
-     */
-    public function indexAction(Request $request)
-    {
-        return $this->render("AppBundle:Admin:index.html.twig");
-    }
+
 }
