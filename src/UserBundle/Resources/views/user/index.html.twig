@@ -1,0 +1,65 @@
+{% extends 'AppBundle::panel_layout.html.twig' %}
+
+{% block panel_body %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Gestion des utilisateurs</h1>
+
+            <a class="btn btn-success" href="{{ path('user_new') }}">Ajouter un utilisateur</a>
+
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <th>Numéro Etudiant</th>
+                    <th>Email</th>
+                    <th>Rôle</th>
+                    <th>UEs associées</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user.firstname }}</td>
+                        <td>{{ user.lastname }}</td>
+                        <td>{{ user.numEtu }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>
+                            {% for role in user.roles %}
+                                {% if role == "ROLE_SUPER_ADMIN" %}
+                                    Super Utilisateur
+                                {% else %}
+                                    {% if role == "ROLE_ADMIN" %}
+                                        Professeur
+                                    {% else %}
+                                        {% if role == "ROLE_USER" %}
+                                            Etudiant
+                                        {% endif %}
+                                    {% endif %}
+                                {% endif %}
+
+                                {% if loop.index != loop.last %}
+                                    |
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            <ul>
+                                {% for ue in user.ues %}
+                                    <li>{{ ue.name }}</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" href="{{ path('user_show', { 'id': user.id }) }}">Afficher</a>
+                            <a class="btn btn-primary" href="{{ path('user_edit', { 'id': user.id }) }}">Editer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

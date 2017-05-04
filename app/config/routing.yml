@@ -1,3 +1,7 @@
+user_user:
+    resource: "@UserBundle/Controller/UserController.php"
+    type:     annotation
+
 app_ue:
     resource: "@AppBundle/Controller/UEController.php"
     type:     annotation
@@ -5,7 +9,7 @@ app_ue:
 user:
     resource: "@UserBundle/Controller/"
     type:     annotation
-    prefix:   /user
+    prefix:   /
 
 app:
     resource: '@AppBundle/Controller/'
