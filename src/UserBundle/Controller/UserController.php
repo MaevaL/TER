@@ -82,7 +82,6 @@ class UserController extends Controller
      */
     public function editAction(Request $request, User $user)
     {
-        $deleteForm = $this->createDeleteForm($user);
         $editForm = $this->createForm('UserBundle\Form\UserType', $user);
         $editForm->handleRequest($request);
 
@@ -96,7 +95,6 @@ class UserController extends Controller
         return $this->render('UserBundle:user:edit.html.twig', array(
             'user' => $user,
             'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 

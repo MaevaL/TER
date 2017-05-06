@@ -12,13 +12,13 @@
 
         <br>
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-xs-left">
                 <a class="btn btn-theme-amu" href="{{ path('user_index') }}"><i class="fa fa-caret-left" aria-hidden="true"></i> Retour à la liste des utilisateurs</a>
             </div>
 
-            <div class="col-lg-6 text-right">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 text-xs-left text-sm-right">
                 {{ form_start(delete_form) }}
-                <button class="btn btn-danger" type="submit"><i class="fa fa-trash" aria-hidden="true"></i> Supprimer</button>
+                <button id="btn-delete-user" class="btn btn-danger" type="submit"><i class="fa fa-trash" aria-hidden="true"></i> Supprimer</button>
                 {{ form_end(delete_form) }}
             </div>
         </div>
@@ -28,6 +28,10 @@
             <div class="col-lg-12">
                 <table class="table table-hover">
                     <tbody>
+                    <tr>
+                        <th>Nom d'utilisateur</th>
+                        <td id="user-username">{{ user.username }}</td>
+                    </tr>
                     <tr>
                         <th>Prénom</th>
                         <td>{{ user.firstname }}</td>
@@ -79,4 +83,62 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    <!-- Modal Suppression -->
+    <div class="modal fade" id="modal-delete-user" tabindex="-1" role="dialog" aria-labelledby="modal-delete-user-label">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="modal-delete-user-label">Confirmation de suppression</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="text-center">
+                                <p>Voulez-vous vraiment supprimer cet utilisateur ?</p>
+                                <div class="form-group">
+                                    <label for="user-delete-confirmation">Afin de confirmer veuillez entrer le nom de l'utilisateur dans le champs suivant :</label>
+                                    <input id="user-delete-confirmation" name="user-delete-confirmation" class="form-control" type="text" />
+                                    <span id="help-user-delete" class="help-block"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    <button id="valid-deletion" type="button" class="btn btn-primary">Valider</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(function() {
+            $('#btn-delete-user').on('click', function(e) {
+                e.preventDefault();
+                $('#user-delete-confirmation').val('');
+                $(".form-group:has(#user-delete-confirmation)").removeClass('has-error');
+                $("#help-user-delete").text('');
+                $('#modal-delete-user').modal('show');
+            });
+
+            $('#valid-deletion').on('click', function(e) {
+                e.preventDefault();
+                var username = $('#user-username').text();
+                var usernameForm = $('#user-delete-confirmation').val();
+
+                if(username == usernameForm)
+                    $("form:has(#btn-delete-user)").submit();
+                else {
+                    $(".form-group:has(#user-delete-confirmation)").addClass('has-error');
+                    $("#help-user-delete").text("Le nom d'utilisateur entré est incorrect.");
+                }
+            });
+        });
+    </script>
 {% endblock %}
