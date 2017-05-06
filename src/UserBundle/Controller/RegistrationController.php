@@ -20,12 +20,13 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 
+//TODO: génrer quand il y a une mauvaise info dans l'inscription le mauvais layout est chargé
 class RegistrationController extends BaseController
 {
     public function registerAction(Request $request)
     {
         /** @var $formFactory FactoryInterface */
-        $formFactory = $this->get('fos_user.registration.form.factory');
+        //$formFactory = $this->get('fos_user.registration.form.factory');
         /** @var $userManager UserManagerInterface */
         $userManager = $this->get('fos_user.user_manager');
         /** @var $dispatcher EventDispatcherInterface */
@@ -41,8 +42,9 @@ class RegistrationController extends BaseController
             return $event->getResponse();
         }
 
-        $form = $formFactory->createForm();
-        $form->setData($user);
+        //$form = $formFactory->createForm();
+        $form = $this->createForm('UserBundle\Form\UserRegistrationType', $user);
+        //$form->setData($user);
 
         $form->handleRequest($request);
 
@@ -50,6 +52,8 @@ class RegistrationController extends BaseController
             if ($form->isValid()) {
                 $event = new FormEvent($form, $request);
                 $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
+
+                $user->setUsername($user->getEmail());
 
                 //Création des clés RSA
                 $crypt_rsa = new Crypt_RSA();
@@ -78,7 +82,7 @@ class RegistrationController extends BaseController
             }
         }
 
-        return $this->render('@FOSUser/Registration/register.html.twig', array(
+        return $this->render('UserBundle:Registration:register.html.twig', array(
             'form' => $form->createView(),
         ));
     }

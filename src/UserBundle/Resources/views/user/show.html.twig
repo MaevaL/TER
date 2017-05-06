@@ -29,8 +29,8 @@
                 <table class="table table-hover">
                     <tbody>
                     <tr>
-                        <th>Nom d'utilisateur</th>
-                        <td id="user-username">{{ user.username }}</td>
+                        <th>Email</th>
+                        <td id="user-email">{{ user.email }}</td>
                     </tr>
                     <tr>
                         <th>Prénom</th>
@@ -43,10 +43,6 @@
                     <tr>
                         <th>Numéro Etudiant</th>
                         <td>{{ user.numEtu }}</td>
-                    </tr>
-                    <tr>
-                        <th>Email</th>
-                        <td>{{ user.email }}</td>
                     </tr>
                     <tr>
                         <th>Rôles</th>
@@ -102,7 +98,7 @@
                             <div class="text-center">
                                 <p>Voulez-vous vraiment supprimer cet utilisateur ?</p>
                                 <div class="form-group">
-                                    <label for="user-delete-confirmation">Afin de confirmer veuillez entrer le nom de l'utilisateur dans le champs suivant :</label>
+                                    <label for="user-delete-confirmation">Afin de confirmer veuillez entrer l'email de l'utilisateur dans le champs suivant :</label>
                                     <input id="user-delete-confirmation" name="user-delete-confirmation" class="form-control" type="text" />
                                     <span id="help-user-delete" class="help-block"></span>
                                 </div>
@@ -128,16 +124,21 @@
                 $('#modal-delete-user').modal('show');
             });
 
+            $('#user-delete-confirmation').on('input', function () {
+                $(".form-group:has(#user-delete-confirmation)").removeClass('has-error');
+                $("#help-user-delete").text('');
+            });
+
             $('#valid-deletion').on('click', function(e) {
                 e.preventDefault();
-                var username = $('#user-username').text();
-                var usernameForm = $('#user-delete-confirmation').val();
+                var email = $('#user-email').text();
+                var emailForm = $('#user-delete-confirmation').val();
 
-                if(username == usernameForm)
+                if(email == emailForm)
                     $("form:has(#btn-delete-user)").submit();
                 else {
                     $(".form-group:has(#user-delete-confirmation)").addClass('has-error');
-                    $("#help-user-delete").text("Le nom d'utilisateur entré est incorrect.");
+                    $("#help-user-delete").text("L'adresse email entrée est incorrecte.");
                 }
             });
         });
