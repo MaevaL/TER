@@ -4,6 +4,7 @@ namespace UserBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 use Sinner\Phpseclib\Crypt\Crypt_RSA;
 
@@ -12,6 +13,9 @@ use Sinner\Phpseclib\Crypt\Crypt_RSA;
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="UserBundle\Repository\UserRepository")
+ * @UniqueEntity("username")
+ * @UniqueEntity("email")
+ * @UniqueEntity("numEtu")
  */
 class User extends BaseUser
 {

@@ -40,13 +40,17 @@ class UserController extends Controller
     public function newAction(Request $request)
     {
         $user = new User();
-        $form = $this->createForm('UserBundle\Form\UserType', $user);
+        $form = $this->createForm('UserBundle\Form\UserCreationType', $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
-            $em->flush();
+            $user->setUsername($user->getEmail());
+
+            $rsaKeyManager = $this->get('app.rsa_key_manager');
+            $rsaKeyManager->generateUserKeys($user);
+
+            $userManager = $this->get('fos_user.user_manager');
+            $userManager->updateUser($user);
 
             $this->addFlash('success', "L'utilisateur a bien été ajouté !");
             return $this->redirectToRoute('user_show', array('id' => $user->getId()));
@@ -82,17 +86,47 @@ class UserController extends Controller
      */
     public function editAction(Request $request, User $user)
     {
-        $editForm = $this->createForm('UserBundle\Form\UserType', $user);
+        $editForm = $this->createForm('UserBundle\Form\UserEditType', $user);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $user->setUsername($user->getEmail());
+
+            $userManager = $this->get('fos_user.user_manager');
+            $userManager->updateUser($user);
 
             $this->addFlash('success', "L'utilisateur a bien été édité !");
             return $this->redirectToRoute('user_index');
         }
 
         return $this->render('UserBundle:user:edit.html.twig', array(
+            'user' => $user,
+            'edit_form' => $editForm->createView(),
+        ));
+    }
+
+    /**
+     * Displays a form to edit password an existing user entity.
+     *
+     * @Route("/{id}/editPassword", name="user_edit_password")
+     * @Method({"GET", "POST"})
+     */
+    public function editPasswordAction(Request $request, User $user)
+    {
+        $editForm = $this->createForm('UserBundle\Form\UserEditPasswordType', $user);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $user->setUsername($user->getEmail());
+
+            $userManager = $this->get('fos_user.user_manager');
+            $userManager->updateUser($user);
+
+            $this->addFlash('success', "Le mot de passe de l'utilisateur a bien été édité !");
+            return $this->redirectToRoute('user_index');
+        }
+
+        return $this->render('UserBundle:user:editPassword.html.twig', array(
             'user' => $user,
             'edit_form' => $editForm->createView(),
         ));

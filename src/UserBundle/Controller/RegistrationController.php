@@ -51,15 +51,12 @@ class RegistrationController extends BaseController
                 $event = new FormEvent($form, $request);
                 $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
 
-                //Crypter la clef ici
+                //Création des clés RSA
                 $crypt_rsa = new Crypt_RSA();
                 $keys = $crypt_rsa->createKey();
 
-                $rsaKey = $this->get('app.rsa_key_manager');
-                //TODO : Vérifier que la clé est unique
-                //TODO : Crypter avec le mot de passe
-                $user->setPublicKey($keys['publickey']);
-                $user->setPrivateKey($rsaKey->cryptByPassword($keys['privatekey'], $user->getPlainPassword()));
+                $rsaKeyManager = $this->get('app.rsa_key_manager');
+                $rsaKeyManager->generateUserKeys($user);
 
                 $userManager->updateUser($user);
 
