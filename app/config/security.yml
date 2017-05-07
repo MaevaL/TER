@@ -23,16 +23,19 @@ security:
         main:
             pattern: ^/
             form_login:
+                use_forward: false
                 provider: fos_userbundle
                 #csrf_provider_generator: form.csrf_provider
                 csrf_token_generator: security.csrf.token_manager
-                always_use_default_target_path : true
-                default_target_path: /panel
+                always_use_default_target_path: false
+                default_target_path:            /
+                target_path_parameter:          panel
+                use_referer:                    false
             logout: true
             anonymous: true
 
     access_control:
-        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin, role: ROLE_SUPER_ADMIN }

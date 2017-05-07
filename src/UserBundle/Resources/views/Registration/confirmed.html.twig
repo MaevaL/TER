@@ -2,9 +2,11 @@
 
 {% trans_default_domain 'FOSUserBundle' %}
 
+{% block offline_title %}Inscription terminée{% endblock %}
+
 {% block fos_user_content %}
-    <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
-    {% if targetUrl %}
-    <p><a href="{{ targetUrl }}">{{ 'registration.back'|trans }}</a></p>
-    {% endif %}
+    <div class="text-center">
+        <p>{{ 'registration.confirmed'|trans({'%username%': user.username}) }}</p>
+        <p><a href="{{ path('app_panel') }}">Cliquez ici pour accéder au panel.</a></p>
+    </div>
 {% endblock fos_user_content %}

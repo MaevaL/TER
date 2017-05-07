@@ -19,12 +19,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-
 //TODO: génrer quand il y a une mauvaise info dans l'inscription le mauvais layout est chargé
 class RegistrationController extends BaseController
 {
     public function registerAction(Request $request)
     {
+        $auth_checker = $this->get('security.authorization_checker');
+
+        if ($auth_checker->isGranted('ROLE_USER')) {
+            return new RedirectResponse($this->generateUrl('app_panel'), 307);
+        }
+
         /** @var $formFactory FactoryInterface */
         //$formFactory = $this->get('fos_user.registration.form.factory');
         /** @var $userManager UserManagerInterface */

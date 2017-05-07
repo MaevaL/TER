@@ -1,0 +1,19 @@
+{% extends "::layout.html.twig" %}
+
+{% block layout_content %}
+    <div class="offline-block">
+        <h2 class="offline-block-heading">{% block offline_title %}{% endblock %}</h2>
+        <div class="offline-block-wrap">
+            {% block body %}{% endblock %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <!--BACKSTRETCH-->
+    <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
+    <script type="text/javascript" src="{{ asset('vendor/theme/js/jquery.backstretch.min.js') }}"></script>
+    <script>
+        $.backstretch("{{ asset('vendor/theme/img/login-bg.jpg') }}", {speed: 500});
+    </script>
+{% endblock %}

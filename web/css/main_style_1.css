@@ -1792,16 +1792,16 @@ label {
   border-radius: 0 6px 6px 0;
   border-color: #41cac0;
 }
-.form-login {
+.offline-block {
   max-width: 330px;
-  margin: 100px auto 0;
+  margin: 50px auto 50px;
   background: #fff;
   border-radius: 5px;
   -webkit-border-radius: 5px;
 }
-.form-login h2.form-login-heading {
+.offline-block h2.offline-block-heading {
   margin: 0;
-  padding: 25px 20px;
+  padding: 20px 20px;
   text-align: center;
   background: #68dff0;
   border-radius: 5px 5px 0 0;
@@ -1811,16 +1811,11 @@ label {
   text-transform: uppercase;
   font-weight: 300;
 }
-.login-wrap {
+.offline-block-wrap {
   padding: 20px;
 }
-.login-wrap .registration {
+.offline-block-wrap .registration {
   text-align: center;
-}
-.login-social-link {
-  display: block;
-  margin-top: 20px;
-  margin-bottom: 15px;
 }
 #showtime {
   width: 100%;

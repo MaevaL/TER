@@ -1,36 +1,14 @@
-{% extends "::layout.html.twig" %}
+{% extends "::base_offline.html.twig" %}
 
-{% block layout_content %}
-	<div class="form-login">
-		<h2 class="form-login-heading">Se connecter</h2>
-		<div class="login-wrap">
-            {{ render(controller('FOSUserBundle:Security:login')) }}
+{% block offline_title %}Se Connecter{% endblock %}
 
-			<hr>
-
-			<div class="registration">
-				Vous n'avez pas de compte ?<br/>
-				<a class="" href="#" data-toggle="modal" data-target="#register-modal">
-					Créer un compte
-				</a>
-			</div>
-		</div>
-
-	</div>
-
-	<div id="register-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="register-modal-label">
-		<div class="modal-dialog modal-md" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Fermer"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="register-modal-label">Inscription</h4>
-				</div>
-				<div class="modal-body">
-
-                    {{ render(controller('UserBundle:Registration:register')) }}
-
-				</div>
-			</div>
-		</div>
+{% block body %}
+    {{ render(controller('FOSUserBundle:Security:login')) }}
+	<hr>
+	<div class="registration">
+		Vous n'avez pas de compte ?<br/>
+		<a href="{{ path('fos_user_registration_register') }}">
+			Créer un compte
+		</a>
 	</div>
 {% endblock %}
