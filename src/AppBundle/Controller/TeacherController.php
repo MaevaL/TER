@@ -25,7 +25,7 @@ class TeacherController extends Controller
      */
     public function addGradeFileAction(Request $request)
     {
-        $form = $this->createForm(GradeFileType::class);
+        $form = $this->createForm(GradeFileType::class, null, ['user' => $this->getUser()]);
 
         $form->handleRequest($request);
         if($form->isSubmitted() & $form->isValid()) {
