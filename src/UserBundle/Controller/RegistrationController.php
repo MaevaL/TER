@@ -47,9 +47,7 @@ class RegistrationController extends BaseController
             return $event->getResponse();
         }
 
-        //$form = $formFactory->createForm();
         $form = $this->createForm('UserBundle\Form\UserRegistrationType', $user);
-        //$form->setData($user);
 
         $form->handleRequest($request);
 
@@ -61,9 +59,6 @@ class RegistrationController extends BaseController
                 $user->setUsername($user->getEmail());
 
                 //Création des clés RSA
-                $crypt_rsa = new Crypt_RSA();
-                $keys = $crypt_rsa->createKey();
-
                 $rsaKeyManager = $this->get('app.rsa_key_manager');
                 $rsaKeyManager->generateUserKeys($user);
 

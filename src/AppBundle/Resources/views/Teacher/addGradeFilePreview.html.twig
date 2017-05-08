@@ -1,0 +1,73 @@
+{% extends "AppBundle::panel_layout.html.twig" %}
+
+{% block panel_body %}
+    <div class="showback">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3><i class="fa fa-angle-right"></i> <i class="fa fa-search" aria-hidden="true"></i> Aperçu</h3>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <h4>Notes à ajouter</h4>
+
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>N° Etudiant</th>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Note</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for grade in toAdd %}
+                        <tr>
+                            <td>{{ grade.student.numEtu }}</td>
+                            <td>{{ grade.student.lastname }}</td>
+                            <td>{{ grade.student.firstname }}</td>
+                            <td>{{ grade.grade }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-lg-6">
+                <h4>Nouveaux étudiants</h4>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>N° Etudiant</th>
+                        <th>Email</th>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Note</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for student in notFounded %}
+                        <tr>
+                            <td>{{ student.numEtu }}</td>
+                            <td>{{ student.email }}</td>
+                            <td>{{ student.lastname }}</td>
+                            <td>{{ student.firstname }}</td>
+                            <td>{{ student.grade }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <a class="btn btn-warning" href="{{ path('teacher_panel_add_grade_file') }}"><i class="fa fa-refresh" aria-hidden="true"></i> Recommencer</a>
+                <a class="btn btn-success" href="{{ path('teacher_panel_add_grade_file_validate') }}"><i class="fa fa-check" aria-hidden="true"></i> Valider</a>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

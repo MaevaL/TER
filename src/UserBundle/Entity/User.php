@@ -47,7 +47,7 @@ class User extends BaseUser
      *
      * @ORM\Column(name="numEtu", type="string",length=255, nullable=true)
      */
-    private $numEtu;
+    protected $numEtu;
 
     /**
      * @var string $firstname
@@ -71,8 +71,6 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
-
-
     }
 
     /**

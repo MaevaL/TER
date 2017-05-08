@@ -1,0 +1,40 @@
+{% extends "AppBundle::panel_layout.html.twig" %}
+
+{% block panel_body %}
+    <div class="showback">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3><i class="fa fa-angle-right"></i> Importer un fichier de notes | Compte Rendu</h3>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Nombre de notes ajoutées</th>
+                        <th>Nombre de nouveaux élèves</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{ toAdd|length + notFounded|length }}</td>
+                            <td>{{ notFounded|length }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <a class="btn btn-success" href="{{ path('teacher_panel_add_grade_file') }}"><i class="fa fa-plus" aria-hidden="true"></i> Ajouter un autre fichier</a>
+                <a class="btn btn-info" href="{{ path('teacher_panel') }}"><i class="fa fa-caret-left" aria-hidden="true"></i> Retour à la gestion des notes</a>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

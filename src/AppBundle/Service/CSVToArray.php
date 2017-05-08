@@ -12,11 +12,11 @@ class CSVToArray {
 
         $header = true;
         $head = array(
-            'nom',
-            'prenom',
-            'numero',
+            'firstname',
+            'lastname',
+            'numEtu',
             'email',
-            'note',
+            'grade',
         );
         $data = array();
 

@@ -35,12 +35,14 @@ framework:
     assets: ~
     php_errors:
         log: true
+    property_info:
+        enabled: true
 
 # Twig Configuration
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
-    form_themes: ['bootstrap_3_layout.html.twig']
+    form_themes: ['Form/bootstrap_3_with_help_block.html.twig']
 
 # Doctrine Configuration
 doctrine:
