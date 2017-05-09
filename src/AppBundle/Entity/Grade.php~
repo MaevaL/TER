@@ -47,6 +47,11 @@ class Grade
      */
     private $teacher;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\GradeGroup")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $gradeGroup;
 
     /**
      * Get id
@@ -105,5 +110,52 @@ class Grade
     {
         return $this->gradeTeacher;
     }
-}
 
+    /**
+     * Set student
+     *
+     * @param \UserBundle\Entity\User $student
+     *
+     * @return Grade
+     */
+    public function setStudent(\UserBundle\Entity\User $student)
+    {
+        $this->student = $student;
+
+        return $this;
+    }
+
+    /**
+     * Get student
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getStudent()
+    {
+        return $this->student;
+    }
+
+    /**
+     * Set teacher
+     *
+     * @param \UserBundle\Entity\User $teacher
+     *
+     * @return Grade
+     */
+    public function setTeacher(\UserBundle\Entity\User $teacher)
+    {
+        $this->teacher = $teacher;
+
+        return $this;
+    }
+
+    /**
+     * Get teacher
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getTeacher()
+    {
+        return $this->teacher;
+    }
+}

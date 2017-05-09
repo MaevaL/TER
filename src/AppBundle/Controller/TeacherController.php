@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Grade;
+use AppBundle\Entity\GradeGroup;
 use AppBundle\Form\GradeFileType;
 use AppBundle\Form\PasswordSecurityType;
 use AppBundle\Service\RSAKeyManager;
@@ -92,6 +93,8 @@ class TeacherController extends Controller
             //Sauvegarde des résultats de la recherche en session pour la prochaine étape
             $session->set('toAdd', $toAdd);
             $session->set('notFounded', $notFounded);
+            $session->set('intitule', $form->getData()['intitule']);
+            $session->set('ueId', $form->getData()['ue']->getId());
 
             //Affichage du résultat de l'analyse du fichier
             return $this->render("AppBundle:Teacher:addGradeFilePreview.html.twig", array(
@@ -102,6 +105,8 @@ class TeacherController extends Controller
             //Suppression d'une éventuelle précedente session d'ajout de notes non terminée
             $session->remove('toAdd');
             $session->remove('notFounded');
+            $session->remove('intitule');
+            $session->remove('ueId');
         }
 
         //Affichage du formaulaire d'upload de notes
@@ -140,6 +145,17 @@ class TeacherController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $userRepository = $em->getRepository('UserBundle:User');
 
+                $ueRepository = $em->getRepository('AppBundle:UE');
+                $ue = $ueRepository->find($session->get('ueId'));
+
+                //Création du groupe de note
+                $gradeGroup = new GradeGroup();
+                $gradeGroup->setTeacher($this->getUser());
+                $gradeGroup->setName($session->get('intitule'));
+                $gradeGroup->setUe($ue);
+
+                $em->persist($gradeGroup);
+
                 //Sauvegarde des notes dé étudiants déjà en base de données
                 foreach ($toAdd as $element) {
                     $student = $userRepository->find($element['student']->getId());
@@ -154,6 +170,7 @@ class TeacherController extends Controller
                         $grade->setStudent($student);
                         $grade->setGrade($grades['grade']);
                         $grade->setGradeTeacher($grades['gradeTeacher']);
+                        $grade->setGradeGroup($gradeGroup);
 
                         $em->persist($grade);
                     }
@@ -185,6 +202,7 @@ class TeacherController extends Controller
                     $grade->setStudent($student);
                     $grade->setGrade($grades['grade']);
                     $grade->setGradeTeacher($grades['gradeTeacher']);
+                    $grade->setGradeGroup($gradeGroup);
 
                     $em->persist($grade);
                 }
@@ -218,6 +236,8 @@ class TeacherController extends Controller
         //Suppression des données en session pour finir la session d'ajout
         $session->remove('toAdd');
         $session->remove('notFounded');
+        $session->remove('intitule');
+        $session->remove('ueId');
 
         //Si aucune donnée retour à l'upload
         if(!is_array($toAdd) || !is_array($notFounded)) {

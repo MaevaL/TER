@@ -11,3 +11,7 @@ services:
     app.csvtoarray:
         class: AppBundle\Service\CSVToArray
         arguments: []
+
+    user.login_success_handler:
+        class: UserBundle\Handler\AuthenticationSuccessHandler
+        arguments: ["@router"]

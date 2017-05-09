@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Entity\Grade;
 
 class PanelController extends Controller
 {
@@ -13,22 +14,33 @@ class PanelController extends Controller
      */
     public function panelAction(Request $request)
     {
-        $pass = "test";
-        $rsaKey = $this->get('app.rsa_key_manager');
-        $data = "azertyuiop";
-        $crypt = $rsaKey->cryptByPassword($data, $pass);
-        $decrypt = $rsaKey->decryptByPassword($this->getUser()->getPrivateKey(), "azertyuiop");
+        $session = $this->get('session');
+        $userPrivateKey = $session->get('userPrivateKey');
+
+        $em = $this->getDoctrine()->getManager();
+        $gradeRepository = $em->getRepository('AppBundle:Grade');
+
+        $userGrades = $gradeRepository->findBy(array(
+            'student' => $this->getUser()
+        ));
+
+        $rsaManager = $this->get('app.rsa_key_manager');
+
+        $readableGrades = array();
+        foreach ($userGrades as $grade) {
+            $gradeText = $rsaManager->decryptGradeStudent($userPrivateKey, $grade);
+
+            $readableGrades[] = array(
+                'intitule' => $grade->getGradeGroup()->getName(),
+                'ue' => $grade->getGradeGroup()->getUe(),
+                'date' => $grade->getGradeGroup()->getDate(),
+                'grade' => $gradeText,
+            );
+        }
 
 
-
-        //$test = strtr(base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5($pass), serialize($this->getUser()->getPrivateKey()), MCRYPT_MODE_CBC, md5(md5($pass)))), '+/=', '-_,');
-
-        //$test2 = unserialize(rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5($pass), base64_decode(strtr($test, '-_,', '+/=')), MCRYPT_MODE_CBC, md5(md5($pass))), "\0"));
-        //$test = "";
         return $this->render("AppBundle:Panel:index.html.twig", array(
-            'user' => $this->getUser(),
-            'test' => $crypt,
-            'test2' => $decrypt,
+            'grades' => $readableGrades,
         ));
     }
 }
