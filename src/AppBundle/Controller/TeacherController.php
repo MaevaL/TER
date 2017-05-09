@@ -195,6 +195,7 @@ class TeacherController extends Controller
                     $student->setEmail($newUser['email']);
                     $student->setUsername($newUser['email']);
                     $student->setPlainPassword(uniqid());
+                    $student->setPromotion($gradeGroup->getUe()->getPromotion());
                     $rsaManager->generateUserKeys($student);
 
                     $userManager->updateUser($student);
