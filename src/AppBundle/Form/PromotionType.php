@@ -22,15 +22,6 @@ class PromotionType extends AbstractType
             ->add('code', TextType::class, array(
                 'label' => "Code de la promotion",
             ))
-            ->add('ues', EntityType::class, array(
-                'label' => "UEs de la promotion",
-                'class' => 'AppBundle:UE',
-                'choice_label' => 'name',
-                'attr' => array(
-                    'class' => 'chosen-select-ue'
-                ),
-                'multiple' => true,
-            ))
         ;
     }
     
