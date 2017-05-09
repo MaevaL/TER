@@ -24,6 +24,7 @@
                         <th>Nom</th>
                         <th>Slug</th>
                         <th>Crédits</th>
+                        <th>Promotion</th>
                         <th>Actions</th>
                     </tr>
                     </thead>
@@ -33,6 +34,7 @@
                             <td>{{ uE.name }}</td>
                             <td>{{ uE.slug }}</td>
                             <td>{{ uE.credits }}</td>
+                            <td>[{{ uE.promotion.code }}] {{ uE.promotion.name }}</td>
                             <td>
                                 <a class="btn btn-theme-amu" href="{{ path('ue_show', { 'id': uE.id }) }}"><i class="fa fa-search-plus" aria-hidden="true"></i></a>
                                 <a class="btn btn-success" href="{{ path('ue_edit', { 'id': uE.id }) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
@@ -52,7 +54,7 @@
         $(function() {
             $('#admin-ue-table').DataTable({
                 "columnDefs": [ {
-                    "targets": 3,
+                    "targets": 4,
                     "orderable": false
                 } ],
                 "language": {

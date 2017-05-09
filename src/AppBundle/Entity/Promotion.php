@@ -43,7 +43,7 @@ class Promotion
     private $code;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\UE", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\UE", cascade={"persist"}, mappedBy="promotion")
      */
     private $ues;
 
@@ -140,6 +140,7 @@ class Promotion
     public function __construct()
     {
         $this->ues = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->students = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

@@ -11,6 +11,7 @@
 		<br>
 		<div class="row">
 			<div id="table-filters" class="col-md-12">
+				<hr>
 				<h5 class="text-center">Filtres</h5>
 				<hr>
 			</div>
@@ -23,8 +24,9 @@
 					<thead>
 					<tr>
 						<th data-no-select>Date</th>
+						<th>Promotion</th>
 						<th>UE</th>
-						<th data-no-select>Intiluté</thdata-no-select>
+						<th data-no-select>Intiluté</th>
 						<th data-no-select>Note</th>
 					</tr>
 					</thead>
@@ -32,9 +34,10 @@
                     {% for grade in grades %}
 						<tr>
 							<td>{{ grade.date|date('d/m/Y | H:i') }}</td>
+							<td>{{ grade.ue.promotion.name }}</td>
 							<td>{{ grade.ue.name }}</td>
 							<td>{{ grade.intitule }}</td>
-							<td>{{ grade.grade }}</td>
+							<td class="{% if grade.grade > 10 %}success{% else %}danger{% endif %}">{{ grade.grade }}</td>
 						</tr>
                     {% endfor %}
 					</tbody>

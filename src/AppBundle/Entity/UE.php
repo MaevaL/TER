@@ -44,6 +44,11 @@ class UE
     private $credits;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Promotion", cascade={"persist"}, inversedBy="ues")
+     */
+    private $promotion;
+
+    /**
      * Get id
      *
      * @return int
@@ -124,5 +129,28 @@ class UE
     {
         return $this->credits;
     }
-}
 
+    /**
+     * Set promotion
+     *
+     * @param \AppBundle\Entity\Promotion $promotion
+     *
+     * @return UE
+     */
+    public function setPromotion(\AppBundle\Entity\Promotion $promotion = null)
+    {
+        $this->promotion = $promotion;
+
+        return $this;
+    }
+
+    /**
+     * Get promotion
+     *
+     * @return \AppBundle\Entity\Promotion
+     */
+    public function getPromotion()
+    {
+        return $this->promotion;
+    }
+}
