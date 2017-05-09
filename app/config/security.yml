@@ -32,6 +32,7 @@ security:
                 default_target_path:            /
                 target_path_parameter:          panel
                 use_referer:                    false
+                success_handler: user.login_success_handler
             logout: true
             anonymous: true
 

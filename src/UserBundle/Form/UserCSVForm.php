@@ -29,5 +29,5 @@ class UserCSVForm extends AbstractType
                 'constraints' => array(new CSV())
             ));
     }
-    
+
 }

@@ -1,5 +1,20 @@
 {% extends "::layout.html.twig" %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/dataTables/media/css/dataTables.bootstrap.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('vendor/dataTables/media/js/jquery.dataTables.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('vendor/dataTables/media/js/dataTables.bootstrap.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+        } );
+    </script>
+{% endblock %}
+
 {% block layout_content %}
     <section id="container" >
         <!-- **********************************************************************************************************************************************************
@@ -60,6 +75,7 @@
                                 </a>
                                 <ul class="sub">
                                     <li><a  href="{{ path('user_index') }}">Gestion des utilisateurs</a></li>
+                                    <li><a  href="{{ path('promotion_index') }}">Gestion des promotions</a></li>
                                     <li><a  href="{{ path('ue_index') }}">Gestion des UEs</a></li>
                                 </ul>
                             </li>

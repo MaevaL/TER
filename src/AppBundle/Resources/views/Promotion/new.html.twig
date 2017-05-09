@@ -1,0 +1,49 @@
+{% extends 'AppBundle::panel_layout.html.twig' %}
+
+
+{% block panel_body %}
+    <div class="showback">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3><i class="fa fa-angle-right"></i> Ajouter une promotion</h3>
+            </div>
+        </div>
+
+        <br>
+        <div class="row">
+            <div class="col-lg-12">
+                <a class="btn btn-theme-amu" href="{{ path('promotion_index') }}"><i class="fa fa-caret-left" aria-hidden="true"></i> Retour à la liste des promotions</a>
+            </div>
+        </div>
+        <br>
+
+        <div class="row">
+            <div class="col-lg-12">
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button class="btn btn-success" type="submit"><i class="fa fa-check" aria-hidden="true"></i> Créer</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('vendor/chosen/chosen.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('vendor/chosen/chosen-bootstrap.css') }}" />
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('vendor/chosen/chosen.jquery.min.js') }}" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $(function() {
+            $(".chosen-select-ue").chosen({
+                'placeholder_text_multiple' : "Sélectionner un ou plusieurs UE",
+                'no_results_text' : "Oops, aucun UE trouvé!",
+            });
+        });
+    </script>
+{% endblock %}

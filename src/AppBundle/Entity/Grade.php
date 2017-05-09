@@ -47,9 +47,11 @@ class Grade
      */
     private $teacher;
 
-    //TODO: ajouter la date d'ajout
-    //TODO: associer une note à un UE avec un intitulé de note (pour reconnaitre la note) (ajouter une entité UE GROUP, en many to many avec les grade)
-
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\GradeGroup")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $gradeGroup;
 
     /**
      * Get id
@@ -155,5 +157,29 @@ class Grade
     public function getTeacher()
     {
         return $this->teacher;
+    }
+
+    /**
+     * Set gradeGroup
+     *
+     * @param \AppBundle\Entity\GradeGroup $gradeGroup
+     *
+     * @return Grade
+     */
+    public function setGradeGroup(\AppBundle\Entity\GradeGroup $gradeGroup)
+    {
+        $this->gradeGroup = $gradeGroup;
+
+        return $this;
+    }
+
+    /**
+     * Get gradeGroup
+     *
+     * @return \AppBundle\Entity\GradeGroup
+     */
+    public function getGradeGroup()
+    {
+        return $this->gradeGroup;
     }
 }
