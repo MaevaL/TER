@@ -6,6 +6,7 @@ use UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use UserBundle\Form\UserCSVType;
 
 /**
  * User controller.
@@ -29,6 +30,46 @@ class UserController extends Controller
         return $this->render('UserBundle:user:index.html.twig', array(
             'users' => $users,
         ));
+    }
+
+    /**
+     * Lists all user entities.
+     *
+     * @Route("/uploadStudentList", name="user_upload_student_list")
+     * @Method({"GET", "POST"})
+     */
+    public function uploadStudentListAction(Request $request)
+    {
+        $form = $this->createForm(UserCSVType::class);
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() & $form->isValid()) {
+            $file = $form->getData()['usercsv'];
+
+            //Sauvegarde temporaire du fichier
+            $filename = uniqid() . "." . $file->getClientOriginalExtension();
+            $path = __DIR__ . '/../../../web/upload';
+            $file->move($path, $filename);
+
+            //Analyse du fichier
+            $CSVToArray = $this->get('app.csvtoarray');
+            $data = $CSVToArray->convert($path . "/" . $filename, ',', array(
+                'lastname',
+                'firstname',
+                'numEtu',
+                'codepromotion',
+                'nompromotion',
+                'groupe',
+                'annee',
+                'email'));
+
+            var_dump($data);
+            //Suppression du fichier après analyse
+            unlink($path . "/" . $filename);
+        }
+
+        return $this->render('UserBundle:user:uploadStudentList.html.twig', array('form' => $form->createView()));
+
     }
 
     /**
