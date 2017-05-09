@@ -1,0 +1,65 @@
+{% extends 'AppBundle::panel_layout.html.twig' %}
+
+{% block panel_body %}
+    <div class="showback">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h3><i class="fa fa-angle-right"></i> Promotion : {{ promotion.name }}</h3>
+            </div>
+        </div>
+
+        <br>
+        <div class="row">
+            <div class="col-lg-6">
+                <a class="btn btn-theme-amu" href="{{ path('promotion_index') }}"><i class="fa fa-caret-left" aria-hidden="true"></i> Retour à la liste des promotions</a>
+            </div>
+
+            <div class="col-lg-6 text-right">
+                {{ form_start(delete_form) }}
+                <button class="btn btn-danger" type="submit"><i class="fa fa-trash" aria-hidden="true"></i> Supprimer</button>
+                {{ form_end(delete_form) }}
+            </div>
+        </div>
+        <br>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <th>Nom</th>
+                        <td>{{ promotion.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Slug</th>
+                        <td>{{ promotion.slug }}</td>
+                    </tr>
+                    <tr>
+                        <th>Code</th>
+                        <td>{{ promotion.code }}</td>
+                    </tr>
+                    <tr>
+                        <th>Liste des UEs</th>
+                        <td>
+                            <ul>
+                                {% for ue in promotion.ues %}
+                                    <li>{{ ue.name }}</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <a class="btn btn-success" href="{{ path('promotion_edit', { 'id': promotion.id }) }}"><i class="fa fa-pencil" aria-hidden="true"></i> Editer</a>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
