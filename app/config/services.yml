@@ -15,3 +15,9 @@ services:
     user.login_success_handler:
         class: UserBundle\Handler\AuthenticationSuccessHandler
         arguments: ["@router"]
+
+    user.session_idle_handler:
+        class: UserBundle\Handler\SessionIdleHandler
+        arguments: ["@session", "@security.token_storage", "@router", %session_max_idle_time%]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
