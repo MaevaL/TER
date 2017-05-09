@@ -12,6 +12,10 @@ services:
         class: AppBundle\Service\CSVToArray
         arguments: []
 
+    app.user_manager:
+        class:    AppBundle\Service\UserManager
+        arguments:    ["@app.rsa_key_manager"]
+
     user.login_success_handler:
         class: UserBundle\Handler\AuthenticationSuccessHandler
         arguments: ["@router"]
