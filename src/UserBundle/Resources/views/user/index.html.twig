@@ -1,6 +1,6 @@
-{% extends 'AppBundle::panel_layout.html.twig' %}
+{% extends "::base.html.twig" %}
 
-{% block panel_body %}
+{% block body %}
     <div class="showback">
         <div class="row">
             <div class="col-lg-12">
@@ -27,6 +27,7 @@
                         <th>Numéro Etudiant</th>
                         <th>Email</th>
                         <th>Rôle</th>
+                        <th>Promotion</th>
                         <th>UEs associées</th>
                         <th>Actions</th>
                     </tr>
@@ -56,6 +57,11 @@
                                         |
                                     {% endif %}
                                 {% endfor %}
+                            </td>
+                            <td>
+                                {% if user.promotion != null %}
+                                    {{ user.promotion.name }}
+                                {% endif %}
                             </td>
                             <td>
                                 <ul>

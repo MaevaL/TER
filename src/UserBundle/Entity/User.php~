@@ -4,6 +4,7 @@ namespace UserBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 use Sinner\Phpseclib\Crypt\Crypt_RSA;
 
@@ -12,6 +13,9 @@ use Sinner\Phpseclib\Crypt\Crypt_RSA;
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="UserBundle\Repository\UserRepository")
+ * @UniqueEntity("username")
+ * @UniqueEntity("email")
+ * @UniqueEntity("numEtu")
  */
 class User extends BaseUser
 {
@@ -43,19 +47,19 @@ class User extends BaseUser
      *
      * @ORM\Column(name="numEtu", type="string",length=255, nullable=true)
      */
-    private $numEtu;
+    protected $numEtu;
 
     /**
      * @var string $firstname
      *
-     * @ORM\Column(name="firstname", type="string", length=255, nullable=false)
+     * @ORM\Column(name="firstname", type="string", length=255, nullable=true)
      */
     private $firstname;
 
     /**
      * @var string $lastname
      *
-     * @ORM\Column(name="lastname", type="string", length=255, nullable=false)
+     * @ORM\Column(name="lastname", type="string", length=255, nullable=true)
      */
     private $lastname;
 
@@ -64,11 +68,15 @@ class User extends BaseUser
      */
     private $ues;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Promotion", inversedBy="students")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $promotion;
+
     public function __construct()
     {
         parent::__construct();
-
-
     }
 
     /**
@@ -199,5 +207,39 @@ class User extends BaseUser
     public function getLastname()
     {
         return $this->lastname;
+    }
+
+    /**
+     * Add ue
+     *
+     * @param \AppBundle\Entity\UE $ue
+     *
+     * @return User
+     */
+    public function addUe(\AppBundle\Entity\UE $ue)
+    {
+        $this->ues[] = $ue;
+
+        return $this;
+    }
+
+    /**
+     * Remove ue
+     *
+     * @param \AppBundle\Entity\UE $ue
+     */
+    public function removeUe(\AppBundle\Entity\UE $ue)
+    {
+        $this->ues->removeElement($ue);
+    }
+
+    /**
+     * Get ues
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUes()
+    {
+        return $this->ues;
     }
 }

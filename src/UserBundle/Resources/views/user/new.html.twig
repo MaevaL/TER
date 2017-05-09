@@ -1,7 +1,6 @@
-{% extends 'AppBundle::panel_layout.html.twig' %}
+{% extends "::base.html.twig" %}
 
-{% block panel_body %}
-
+{% block body %}
     <div class="showback">
         <div class="row">
             <div class="col-lg-12">
@@ -26,7 +25,6 @@
             </div>
         </div>
     </div>
-
 {% endblock %}
 
 {% block stylesheets %}
@@ -44,6 +42,11 @@
             $(".chosen-select-ue").chosen({
                 'placeholder_text_multiple' : "Sélectionner un ou plusieurs UE",
                 'no_results_text' : "Oops, aucun UE trouvé!",
+            });
+
+            $(".chosen-select-promotion").chosen({
+                'placeholder_text_single' : "Sélectionner une promotion",
+                'no_results_text' : "Oops, aucune promotion trouvée!",
             });
         });
     </script>
