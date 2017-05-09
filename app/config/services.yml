@@ -14,7 +14,7 @@ services:
 
     app.user_manager:
         class:    AppBundle\Service\UserManager
-        arguments:    ["@app.rsa_key_manager"]
+        arguments:    ["@app.rsa_key_manager", "@doctrine.orm.entity_manager", "@fos_user.user_manager"]
 
     user.login_success_handler:
         class: UserBundle\Handler\AuthenticationSuccessHandler

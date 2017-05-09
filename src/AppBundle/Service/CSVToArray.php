@@ -16,9 +16,10 @@ class CSVToArray {
 
         if (($handle = fopen($filename, 'r')) !== FALSE) {
             while (($row = fgetcsv($handle, 1000, $delimiter)) !== FALSE) {
-                if($header && $head == null) {
+                if($header) {
                     $header = false;
-                    $head = $row;
+                    if($head == null)
+                        $head = $row;
                 } else {
                     $data[] = array_combine($head, $row);
                 }

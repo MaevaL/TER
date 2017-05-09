@@ -57,15 +57,21 @@ class UserController extends Controller
                 'lastname',
                 'firstname',
                 'numEtu',
-                'codepromotion',
+                'idpromotion',
                 'nompromotion',
                 'groupe',
                 'annee',
                 'email'));
 
-            var_dump($data);
             //Suppression du fichier après analyse
             unlink($path . "/" . $filename);
+
+            $userManager = $this->get("app.user_manager");
+            foreach($data as $student)
+                $userManager->addUserToBDD($student);
+
+            $this->addFlash('succes', count($data)." étudiant(s) ont été ajoutés à la base de données.");
+            return $this->redirect('user_index');
         }
 
         return $this->render('UserBundle:user:uploadStudentList.html.twig', array('form' => $form->createView()));
