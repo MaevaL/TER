@@ -68,6 +68,12 @@ class User extends BaseUser
      */
     private $ues;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Promotion", inversedBy="students")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $promotion;
+
     public function __construct()
     {
         parent::__construct();
@@ -235,5 +241,29 @@ class User extends BaseUser
     public function getUes()
     {
         return $this->ues;
+    }
+
+    /**
+     * Set promotion
+     *
+     * @param \AppBundle\Entity\Promotion $promotion
+     *
+     * @return User
+     */
+    public function setPromotion(\AppBundle\Entity\Promotion $promotion = null)
+    {
+        $this->promotion = $promotion;
+
+        return $this;
+    }
+
+    /**
+     * Get promotion
+     *
+     * @return \AppBundle\Entity\Promotion
+     */
+    public function getPromotion()
+    {
+        return $this->promotion;
     }
 }

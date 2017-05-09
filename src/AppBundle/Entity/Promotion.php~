@@ -47,6 +47,11 @@ class Promotion
      */
     private $ues;
 
+    /**
+     * @ORM\OneToMany(targetEntity="UserBundle\Entity\User", mappedBy="promotion")
+     */
+    private $students;
+
 
     /**
      * Get id
@@ -129,5 +134,45 @@ class Promotion
     {
         return $this->code;
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->ues = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Add ue
+     *
+     * @param \AppBundle\Entity\UE $ue
+     *
+     * @return Promotion
+     */
+    public function addUe(\AppBundle\Entity\UE $ue)
+    {
+        $this->ues[] = $ue;
+
+        return $this;
+    }
+
+    /**
+     * Remove ue
+     *
+     * @param \AppBundle\Entity\UE $ue
+     */
+    public function removeUe(\AppBundle\Entity\UE $ue)
+    {
+        $this->ues->removeElement($ue);
+    }
+
+    /**
+     * Get ues
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUes()
+    {
+        return $this->ues;
+    }
+}
