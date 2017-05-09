@@ -50,7 +50,13 @@ class TeacherController extends Controller
 
             //Analyse du fichier
             $CSVToArray = $this->get('app.csvtoarray');
-            $data = $CSVToArray->convert($path."/".$filename, ',');
+            $data = $CSVToArray->convert($path."/".$filename, ',', array(
+                'firstname',
+                'lastname',
+                'numEtu',
+                'email',
+                'grade',
+            ));
 
             //Suppression du fichier après analyse
             unlink($path."/".$filename);
