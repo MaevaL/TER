@@ -44,6 +44,10 @@
                         <td>{{ user.numEtu }}</td>
                     </tr>
                     <tr>
+                        <th>Promotion</th>
+                        <td>[{{ user.promotion.code }}] {{ user.promotion.name }}</td>
+                    </tr>
+                    <tr>
                         <th>Rôles</th>
                         <td>
                             {% for role in user.roles %}
@@ -66,7 +70,6 @@
                             {% endfor %}
                         </td>
                     </tr>
-
                     </tbody>
                 </table>
             </div>

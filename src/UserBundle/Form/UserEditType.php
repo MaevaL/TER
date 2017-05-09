@@ -41,14 +41,27 @@ class UserEditType extends AbstractType
                 ),
                 'multiple' => true,
             ))
+            ->add('promotion', EntityType::class, array(
+                'label' => "Promotion (si étudiant)",
+                'class' => 'AppBundle:Promotion',
+                'choice_label' => 'name',
+                'attr' => array(
+                    'class' => 'chosen-select-promotion'
+                ),
+                'multiple' => false,
+                'required' => false,
+                'placeholder' => 'Aucune promotion',
+                'empty_data'  => null,
+            ))
             ->add('ues', EntityType::class, array(
-                'label' => "UEs associées",
+                'label' => "UEs associées (si professeur)",
                 'class' => 'AppBundle:UE',
                 'choice_label' => 'name',
                 'attr' => array(
                     'class' => 'chosen-select-ue'
                 ),
                 'multiple' => true,
+                'required' => false,
             ))
         ;
     }

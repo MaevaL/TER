@@ -26,6 +26,7 @@
                         <th>Numéro Etudiant</th>
                         <th>Email</th>
                         <th>Rôle</th>
+                        <th>Promotion</th>
                         <th>UEs associées</th>
                         <th>Actions</th>
                     </tr>
@@ -55,6 +56,11 @@
                                         |
                                     {% endif %}
                                 {% endfor %}
+                            </td>
+                            <td>
+                                {% if user.promotion != null %}
+                                    {{ user.promotion.name }}
+                                {% endif %}
                             </td>
                             <td>
                                 <ul>
