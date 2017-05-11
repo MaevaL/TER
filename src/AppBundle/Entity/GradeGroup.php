@@ -47,6 +47,12 @@ class GradeGroup
      */
     private $date;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Grade", mappedBy="gradeGroup")
+     * @ORM\JoinColumn(nullable=false, onDelete="cascade")
+     */
+    private $grades;
+
 
     public function __construct()
     {
@@ -157,5 +163,39 @@ class GradeGroup
     public function getUe()
     {
         return $this->ue;
+    }
+
+    /**
+     * Add grade
+     *
+     * @param \AppBundle\Entity\Grade $grade
+     *
+     * @return GradeGroup
+     */
+    public function addGrade(\AppBundle\Entity\Grade $grade)
+    {
+        $this->grades[] = $grade;
+
+        return $this;
+    }
+
+    /**
+     * Remove grade
+     *
+     * @param \AppBundle\Entity\Grade $grade
+     */
+    public function removeGrade(\AppBundle\Entity\Grade $grade)
+    {
+        $this->grades->removeElement($grade);
+    }
+
+    /**
+     * Get grades
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGrades()
+    {
+        return $this->grades;
     }
 }

@@ -103,6 +103,7 @@ class TeacherController extends Controller
             $grades = $gradeGroupRepository->findGradesGradeGroup($gg);
             $gradeGroupResults = array(
                 'gradeGroup' => $gg,
+                'deleteForm' => $this->createDeleteGradeGroupForm($gg)->createView(),
                 'positive' => 0,
                 'totalGrades' => 0,
                 'percent' => 0,
@@ -157,6 +158,7 @@ class TeacherController extends Controller
             $grade = array(
                 'grade' => $gradeElement,
                 'gradeFloat' => $gradefloat,
+                'deleteForm' => $this->createDeleteGradeForm($gradeElement)->createView(),
             );
 
             $gradesDisplay[] = $grade;
@@ -166,6 +168,88 @@ class TeacherController extends Controller
             'gradeGroup' => $gradeGroup,
             'gradesDisplay' => $gradesDisplay,
         ));
+    }
+
+    /**
+     * Deletes a grade entity.
+     *
+     * @Route("grade/{id}", name="grade_delete")
+     * @Method("DELETE")
+     */
+    public function deleteGradeAction(Request $request, Grade $grade)
+    {
+        $form = $this->createDeleteGradeForm($grade);
+        $form->handleRequest($request);
+
+        $gradeGroup = $grade->getGradeGroup();
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($grade);
+            $em->flush();
+        }
+
+        $this->addFlash('success', "La note a bien été supprimée !");
+        return $this->redirectToRoute('teacher_panel_view_grade_group', array(
+            'id' => $gradeGroup->getId(),
+        ));
+    }
+
+    /**
+     * Creates a form to delete a grade entity.
+     *
+     * @param Grade $grade The grade entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteGradeForm(Grade $grade)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('grade_delete', array('id' => $grade->getId())))
+            ->setMethod('DELETE')
+            ->getForm()
+            ;
+    }
+
+    /**
+     * Deletes a grade group entity.
+     *
+     * @Route("gradeGroup/{id}", name="grade_group_delete")
+     * @Method("DELETE")
+     */
+    public function deleteGradeGroupAction(Request $request, GradeGroup $gradeGroup)
+    {
+        $form = $this->createDeleteGradeGroupForm($gradeGroup);
+        $form->handleRequest($request);
+
+        $ue = $gradeGroup->getUe();
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($gradeGroup);
+            $em->flush();
+        }
+
+        $this->addFlash('success', "Le groupe de notes a bien été supprimée !");
+        return $this->redirectToRoute('teacher_panel_view_ue', array(
+            'id' => $ue->getId(),
+        ));
+    }
+
+    /**
+     * Creates a form to delete a grade group entity.
+     *
+     * @param GradeGroup $gradeGroup The grade group entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createDeleteGradeGroupForm(GradeGroup $gradeGroup)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('grade_group_delete', array('id' => $gradeGroup->getId())))
+            ->setMethod('DELETE')
+            ->getForm()
+            ;
     }
 
     /**
