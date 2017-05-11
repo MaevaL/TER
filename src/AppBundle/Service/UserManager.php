@@ -20,6 +20,9 @@ class UserManager
 
     public function addUserToBDD($newUser)
     {
+
+        $foundEtu = $this->exist($newUser);
+        if($foundEtu == null) {
             //Création de l'étudiant
             $student = $this->userManager->createUser();
             $student->setEnabled(false);
@@ -28,11 +31,11 @@ class UserManager
             $student->setNumEtu($newUser['numEtu']);
             $student->setEmail($newUser['email']);
             $student->setUsername($newUser['email']);
+            $student->setPlainPassword(uniqid());
 
             $promotionRepository = $this->entityManager->getRepository("AppBundle:Promotion");
             $promotion = $promotionRepository->findOneBy(array("code" => $newUser['idpromotion']));
-            if($promotion == null)
-            {
+            if ($promotion == null) {
                 $promotion = new Promotion();
                 $promotion->setName($newUser['nompromotion']);
                 $promotion->setCode($newUser['idpromotion']);
@@ -52,9 +55,29 @@ class UserManager
             $this->userManager->updateUser($student);
             $this->entityManager->flush();
             $this->sendEmail($student);
+            return $student;
+        }
     }
 
-    //TODO: envoi de mail pour finalisation du compte
+    public function exist($newUser){
+        //Verification de l'existance d'un étudiant
+        //par numero etudiant
+        $userRepository = $this->entityManager->getRepository('UserBundle:User');
+        $foundEtu = $userRepository->findOneBy(array(
+            'numEtu' => $newUser['numEtu'],
+        ));
+
+        //par email
+        if($foundEtu == null) {
+            $foundEtu = $userRepository->findOneBy(array(
+                'email' => $newUser['email'],
+            ));
+        }
+
+        return $foundEtu;
+    }
+
+//TODO: envoi de mail pour finalisation du compte
     public function sendEmail($user)
     {
 

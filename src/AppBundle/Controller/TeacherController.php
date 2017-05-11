@@ -67,20 +67,9 @@ class TeacherController extends Controller
             //Recherche des étudiants listés dans le fichier
             $em = $this->getDoctrine()->getManager();
             $userRepository = $em->getRepository('UserBundle:User');
+            $userService = $this->get("app.user_manager");
             foreach ($data as $student) {
-                //Récupération depuis la BDD par Numéro étudiant
-                $foundEtu = $userRepository->findOneBy(array(
-                    'numEtu' => $student['numEtu'],
-                ));
-
-
-                //Sinon récupération depuis la BDD par email
-                if($foundEtu == null) {
-                    $foundEtu = $userRepository->findOneBy(array(
-                        'email' => $student['email'],
-                    ));
-                }
-
+                $foundEtu = $userService->exist($student);
 
                 //L'étudiant est déjà dans la base
                 if($foundEtu != null) {
@@ -88,7 +77,6 @@ class TeacherController extends Controller
                         'student' => $foundEtu,
                         'grade' => $student['grade'],
                     );
-
                 }
                 //L'étudiant n'est pas dans la base
                 else {
@@ -184,21 +172,11 @@ class TeacherController extends Controller
 
                 //Création des nouveaux étudiants et ajout de leur note
                 $userManager = $this->get('fos_user.user_manager');
+                $userService = $this->get("app.user_manager");
                 foreach ($notFounded as $newUser) {
                     //Création de l'étudiant
-                    //TODO: envoi de mail pour finalisation du compte
-                    $student = $userManager->createUser();
-                    $student->setEnabled(false);
-                    $student->setFirstname($newUser['firstname']);
-                    $student->setLastname($newUser['lastname']);
-                    $student->setNumEtu($newUser['numEtu']);
-                    $student->setEmail($newUser['email']);
-                    $student->setUsername($newUser['email']);
-                    $student->setPlainPassword(uniqid());
-                    $student->setPromotion($gradeGroup->getUe()->getPromotion());
-                    $rsaManager->generateUserKeys($student);
-
-                    $userManager->updateUser($student);
+                    $newUser['idpromotion'] = $gradeGroup->getUe()->getPromotion()->getId();
+                    $student = $userService->addUserToBDD($newUser);
 
                     //Récupération des clés RSA et sauvegarde de la note
                     $privateKey = $rsaManager->getUserPrivateKey($this->getUser(), $formPassword->getData()['password']);

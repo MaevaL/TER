@@ -1,0 +1,17 @@
+<div class="showback">
+    <div class="row">
+        <div class="col-md-12">
+            {% trans_default_domain 'FOSUserBundle' %}
+
+            <div class="fos_user_user_show">
+                <p> Prénom : {{ user.firstname }}</p>
+                <p> Nom : {{ user.lastname }}</p>
+                <p> Email : {{ user.email }}</p>
+                <p> Numero étudiant : {{ user.numEtu }}</p>
+                <p><a class="btn btn-theme-amu" href={{ path("fos_user_change_password") }}> Editer mot de passe </a></p>
+
+            </div>
+        </div>
+    </div>
+</div>
+
