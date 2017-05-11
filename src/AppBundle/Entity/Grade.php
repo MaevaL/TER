@@ -48,8 +48,8 @@ class Grade
     private $teacher;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\GradeGroup")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\GradeGroup", inversedBy="grades")
+     * @ORM\JoinColumn(nullable=false, onDelete="cascade")
      */
     private $gradeGroup;
 

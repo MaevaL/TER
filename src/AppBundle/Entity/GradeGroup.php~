@@ -47,6 +47,17 @@ class GradeGroup
      */
     private $date;
 
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Grade", mappedBy="gradeGroup")
+     * @ORM\JoinColumn(nullable=false, onDelete="cascade")
+     */
+    private $grades;
+
+
+    public function __construct()
+    {
+        $this->date = new \DateTime();
+    }
 
     /**
      * Get id
@@ -81,5 +92,110 @@ class GradeGroup
     {
         return $this->name;
     }
-}
 
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     *
+     * @return GradeGroup
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * Set teacher
+     *
+     * @param \UserBundle\Entity\User $teacher
+     *
+     * @return GradeGroup
+     */
+    public function setTeacher(\UserBundle\Entity\User $teacher)
+    {
+        $this->teacher = $teacher;
+
+        return $this;
+    }
+
+    /**
+     * Get teacher
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getTeacher()
+    {
+        return $this->teacher;
+    }
+
+    /**
+     * Set ue
+     *
+     * @param \AppBundle\Entity\UE $ue
+     *
+     * @return GradeGroup
+     */
+    public function setUe(\AppBundle\Entity\UE $ue)
+    {
+        $this->ue = $ue;
+
+        return $this;
+    }
+
+    /**
+     * Get ue
+     *
+     * @return \AppBundle\Entity\UE
+     */
+    public function getUe()
+    {
+        return $this->ue;
+    }
+
+    /**
+     * Add grade
+     *
+     * @param \AppBundle\Entity\Grade $grade
+     *
+     * @return GradeGroup
+     */
+    public function addGrade(\AppBundle\Entity\Grade $grade)
+    {
+        $this->grades[] = $grade;
+
+        return $this;
+    }
+
+    /**
+     * Remove grade
+     *
+     * @param \AppBundle\Entity\Grade $grade
+     */
+    public function removeGrade(\AppBundle\Entity\Grade $grade)
+    {
+        $this->grades->removeElement($grade);
+    }
+
+    /**
+     * Get grades
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getGrades()
+    {
+        return $this->grades;
+    }
+}

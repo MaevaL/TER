@@ -1,0 +1,117 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+	<div class="showback">
+		<div class="row">
+			<div class="col-md-12">
+				<h4>Liste des notes de : {{ gradeGroup.name }}</h4>
+			</div>
+		</div>
+
+		<br>
+		<div class="row">
+			<div class="col-md-12">
+				<a class="btn btn-theme-amu" href="{{ path('teacher_panel_view_ue', {id: gradeGroup.ue.id}) }}"><i class="fa fa-caret-left" aria-hidden="true"></i> Retour à la liste des notes de l'UE : {{ gradeGroup.ue.name }}</a>
+			</div>
+		</div>
+		<br>
+
+		<div class="row">
+			<div class="col-lg-12">
+				<table id="users-grades" class="table table-hover">
+					<thead>
+					<tr>
+						<th>Nom</th>
+						<th>Prénom</th>
+						<th>Numéro Etudiant</th>
+						<th>Note</th>
+						<th>Actions</th>
+					</tr>
+					</thead>
+					<tbody>
+                    {% for gradeElement in gradesDisplay %}
+                        {% set student = gradeElement.grade.student %}
+						<tr>
+							<td>{{ student.lastname }}</td>
+							<td>{{ student.firstname }}</td>
+							<td>{{ student.numEtu }}</td>
+							<td class="{% if gradeElement.gradeFloat > 10 %}success{% else %}danger{% endif %}">{{ gradeElement.gradeFloat }}</td>
+							<td>
+								<ul class="list-inline">
+									<li><a class="btn btn-warning" href="{{ path('teacher_panel_grade_edit', {id: gradeElement.grade.id}) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a></li>
+									<li>
+                                        {{ form_start(gradeElement.deleteForm) }}
+										<button type="submit" class="delete-grade btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                        {{ form_end(gradeElement.deleteForm) }}
+									</li>
+								</ul>
+							</td>
+						</tr>
+                    {% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+	<!-- Modal Suppression -->
+	<div class="modal fade" id="modal-delete-grade" tabindex="-1" role="dialog" aria-labelledby="modal-delete-grade-label">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="modal-delete-grade-label">Confirmation de suppression</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="text-center">
+								<p>Voulez-vous vraiment supprimer cette note ?</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+					<button id="valid-deletion" type="button" class="btn btn-primary">Valider</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+        $(function() {
+            $('#users-grades').DataTable({
+                "columnDefs": [ {
+                    "targets": 4,
+                    "orderable": false
+                } ],
+                "language": {
+                    "url": "{{ asset('vendor/dataTables/media/lang/French.json') }}"
+                }
+            });
+
+            var deleteForm = null;
+
+            $('.delete-grade').on('click', function(e) {
+                e.preventDefault();
+                deleteForm = $(this).parent('form');
+                $('#modal-delete-grade').modal('show');
+            });
+
+            $('#modal-delete-grade').on('hidden.bs.modal', function () {
+                deleteForm = null;
+            });
+
+            $('#valid-deletion').on('click', function (e) {
+				e.preventDefault();
+				deleteForm.submit();
+            });
+        });
+	</script>
+{% endblock %}

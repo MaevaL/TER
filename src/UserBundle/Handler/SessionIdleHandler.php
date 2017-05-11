@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use UserBundle\Entity\User;
 
 class SessionIdleHandler
 {
@@ -27,6 +28,11 @@ class SessionIdleHandler
     public function onKernelRequest(GetResponseEvent $event)
     {
         if (HttpKernelInterface::MASTER_REQUEST != $event->getRequestType()) {
+            return;
+        }
+
+        $user = $this->securityToken->getToken()->getUser();
+        if (!$user instanceof User) {
             return;
         }
 

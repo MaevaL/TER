@@ -1,0 +1,29 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+
+    <div class="showback">
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Edition de la note de : {{ grade.student.lastname }} {{ grade.student.firstname }}</h4>
+        </div>
+    </div>
+
+    <br>
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-theme-amu" href="{{ path('teacher_panel_view_grade_group', {id: grade.gradeGroup.id}) }}"><i class="fa fa-caret-left" aria-hidden="true"></i> Retour à la liste des notes de : {{ grade.gradeGroup.name }}</a>
+        </div>
+    </div>
+    <br>
+
+    <div class="row">
+        <div class="col-md-12">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button class="btn btn-success" type="submit"><i class="fa fa-floppy-o" aria-hidden="true"></i> Enregistrer</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}

@@ -48,7 +48,7 @@ class Grade
     private $teacher;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\GradeGroup")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\GradeGroup", inversedBy="grades")
      * @ORM\JoinColumn(nullable=false)
      */
     private $gradeGroup;
@@ -157,5 +157,29 @@ class Grade
     public function getTeacher()
     {
         return $this->teacher;
+    }
+
+    /**
+     * Set gradeGroup
+     *
+     * @param \AppBundle\Entity\GradeGroup $gradeGroup
+     *
+     * @return Grade
+     */
+    public function setGradeGroup(\AppBundle\Entity\GradeGroup $gradeGroup)
+    {
+        $this->gradeGroup = $gradeGroup;
+
+        return $this;
+    }
+
+    /**
+     * Get gradeGroup
+     *
+     * @return \AppBundle\Entity\GradeGroup
+     */
+    public function getGradeGroup()
+    {
+        return $this->gradeGroup;
     }
 }
