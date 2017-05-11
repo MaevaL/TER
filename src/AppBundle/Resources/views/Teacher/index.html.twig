@@ -14,7 +14,56 @@
 				<a class="btn btn-success" href="{{ path('teacher_panel_add_grade_file') }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Ajouter un fichier de notes</a>
 			</div>
 		</div>
-		<br>
+	</div>
+
+	<div class="showback">
+		<div class="row text-center">
+			<div class="col-md-12">
+				<h4>Liste de vos UES</h4>
+			</div>
+		</div>
+	</div>
+
+	<div class="row mt">
+        {% for ueResults in uesDisplay %}
+			{% set ue = ueResults.ue %}
+            {% set positive = ueResults.percent %}
+            {% set negative = 100 - positive %}
+            {% set positive_color = "#dff0d8" %}
+            {% set negative_color = "#f2dede" %}
+			<a href="{{ path('teacher_panel_view_ue', {id: ue.id}) }}">
+				<div class="col-md-4 col-sm-4 mb">
+					<div class="white-panel pn donut-chart">
+						<div class="white-header">
+							<h5>{{ ue.name }}</h5>
+						</div>
+						<div class="row">
+							<div class="col-sm-6 col-xs-6 goleft">
+								<p><i style="color:{{ positive_color }}" class="fa fa-arrow-circle-o-up" aria-hidden="true"></i> {{ positive }}% de notes >= 10</p>
+							</div>
+
+							<div class="col-sm-6 col-xs-6 goright">
+								<p><i style="color:{{ negative_color }}" class="fa fa-arrow-circle-o-down" aria-hidden="true"></i> {{ negative }}% de notes < 10</p>
+							</div>
+						</div>
+						<canvas id="UE-{{ ue.id }}" height="120" width="120"></canvas>
+						<script>
+                            var doughnutData = [
+                                {
+                                    value: {{ positive }},
+                                    color:"{{ positive_color }}"
+                                },
+                                {
+                                    value : {{ negative }},
+                                    color : "{{ negative_color }}"
+                                }
+                            ];
+                            var myDoughnut = new Chart(document.getElementById("UE-{{ ue.id }}").getContext("2d")).Doughnut(doughnutData);
+						</script>
+					</div>
+				</div>
+			</a>
+        {% endfor %}
 	</div>
 
 

@@ -1,0 +1,65 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+	<div class="showback">
+		<div class="row">
+			<div class="col-md-12">
+				<h4>Liste des notes de : {{ gradeGroup.name }}</h4>
+			</div>
+		</div>
+
+		<br>
+		<div class="row">
+			<div class="col-md-12">
+				<a class="btn btn-theme-amu" href="{{ path('teacher_panel_view_ue', {id: gradeGroup.ue.id}) }}"><i class="fa fa-caret-left" aria-hidden="true"></i> Retour à la liste des notes de l'UE : {{ gradeGroup.ue.name }}</a>
+			</div>
+		</div>
+		<br>
+
+		<div class="row">
+			<div class="col-lg-12">
+				<table id="users-grades" class="table table-hover">
+					<thead>
+					<tr>
+						<th>Nom</th>
+						<th>Prénom</th>
+						<th>Numéro Etudiant</th>
+						<th>Note</th>
+						<th>Actions</th>
+					</tr>
+					</thead>
+					<tbody>
+                    {% for gradeElement in gradesDisplay %}
+                        {% set student = gradeElement.grade.student %}
+						<tr>
+							<td>{{ student.lastname }}</td>
+							<td>{{ student.firstname }}</td>
+							<td>{{ student.numEtu }}</td>
+							<td class="{% if gradeElement.gradeFloat > 10 %}success{% else %}danger{% endif %}">{{ gradeElement.gradeFloat }}</td>
+							<td><a class="btn btn-warning" href="{{ path('teacher_panel_grade_edit', {id: gradeElement.grade.id}) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+						</tr>
+                    {% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+	<script type="text/javascript">
+        $(function() {
+			$('#users-grades').DataTable({
+                "columnDefs": [ {
+                    "targets": 4,
+                    "orderable": false
+                } ],
+                "language": {
+                    "url": "{{ asset('vendor/dataTables/media/lang/French.json') }}"
+                }
+            });
+        });
+	</script>
+{% endblock %}

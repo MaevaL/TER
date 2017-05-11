@@ -1017,12 +1017,13 @@ a.logo span {
   margin-top: 5px;
   font-weight: 700;
   margin-left: 15px;
+  margin-right: 15px;
 }
 .white-panel .white-header {
-  background: #f4f4f4;
+  background: #00CCFF;
   padding: 3px;
   margin-bottom: 15px;
-  color: #c6c6c6;
+  color: white;
 }
 .white-panel .small {
   font-size: 10px;
