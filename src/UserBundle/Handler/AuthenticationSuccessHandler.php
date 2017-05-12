@@ -15,7 +15,7 @@ class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterf
      * @var Router
      */
     protected $router;
-    private  $RSAKeyManager = null;
+    private $RSAKeyManager = null;
 
     /**
      * Initialize authentication

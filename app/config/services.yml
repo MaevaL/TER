@@ -24,6 +24,12 @@ services:
         class: UserBundle\Handler\AuthenticationSuccessHandler
         arguments: ["@router", '@app.rsa_key_manager']
 
+    user.password_resetting_success_listener:
+        class: UserBundle\EventListener\PasswordResettingListener
+        arguments: ['@router', '@app.rsa_key_manager', '@security.token_storage', '@session']
+        tags:
+            - { name: kernel.event_subscriber }
+
     user.session_idle_handler:
         class: UserBundle\Handler\SessionIdleHandler
         arguments: ["@session", "@security.token_storage", "@router", %session_max_idle_time%]

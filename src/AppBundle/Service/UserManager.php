@@ -4,6 +4,7 @@ namespace AppBundle\Service;
 use AppBundle\Entity\Promotion;
 use Cocur\Slugify\Slugify;
 use Doctrine\ORM\EntityManager;
+use UserBundle\Entity\User;
 
 class UserManager
 {
@@ -16,6 +17,16 @@ class UserManager
         $this->rsaManager = $rsaManager;
         $this->entityManager = $entityManager;
         $this->userManager = $userManager;
+    }
+
+    public function updatePrivateKeyPassword(User $user, $oldPassword, $newPassword)
+    {
+        $rsa = $this->rsaManager;
+
+        $key = $rsa->decryptByPassword($user->getPrivateKey(),$oldPassword);
+        $key = $rsa->cryptByPassword($key, $newPassword);
+
+        $user->setPrivateKey($key);
     }
 
     public function addUserToBDD($newUser)

@@ -1,0 +1,11 @@
+{% extends "::base_offline.html.twig" %}
+
+{% block offline_title %}Mot de passe oublié ?{% endblock %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block body %}
+    <p>
+        {{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime})|nl2br }}
+    </p>
+{% endblock %}
