@@ -43,6 +43,13 @@ class User extends BaseUser
     private $privateKey;
 
     /**
+     * @var string $privateKey
+     *
+     * @ORM\Column(name="privateKeyAdmin", type="text", nullable=true)
+     */
+    private $privateKeyAdmin;
+
+    /**
      * @var string $numEtu
      *
      * @ORM\Column(name="numEtu", type="string",length=255, nullable=true)
@@ -77,16 +84,6 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
-    }
-
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**
@@ -135,6 +132,30 @@ class User extends BaseUser
     public function getPrivateKey()
     {
         return $this->privateKey;
+    }
+
+    /**
+     * Set privateKeyAdmin
+     *
+     * @param string $privateKeyAdmin
+     *
+     * @return User
+     */
+    public function setPrivateKeyAdmin($privateKeyAdmin)
+    {
+        $this->privateKeyAdmin = $privateKeyAdmin;
+
+        return $this;
+    }
+
+    /**
+     * Get privateKeyAdmin
+     *
+     * @return string
+     */
+    public function getPrivateKeyAdmin()
+    {
+        return $this->privateKeyAdmin;
     }
 
     /**

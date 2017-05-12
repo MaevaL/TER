@@ -31,7 +31,6 @@ class UserManager
 
     public function addUserToBDD($newUser)
     {
-
         $foundEtu = $this->exist($newUser);
         if($foundEtu == null) {
             //Création de l'étudiant

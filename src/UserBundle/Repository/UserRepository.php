@@ -10,4 +10,35 @@ namespace UserBundle\Repository;
  */
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @param string $role
+     *
+     * @return array
+     */
+    public function findOneByRole($role)
+    {
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('u')
+            ->from($this->_entityName, 'u')
+            ->where('u.roles LIKE :roles')
+            ->setParameter('roles', '%"'.$role.'"%');
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * @param string $role
+     *
+     * @return array
+     */
+    public function findNonSuperAdmin()
+    {
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('u')
+            ->from($this->_entityName, 'u')
+            ->where('u.roles NOT LIKE :roles')
+            ->setParameter('roles', '%"ROLE_SUPER_ADMIN"%');
+
+        return $qb->getQuery()->getResult();
+    }
 }
