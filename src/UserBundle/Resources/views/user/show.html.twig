@@ -1,3 +1,6 @@
+{% set sidebar_active = 'admin' %}
+{% set sidebar_active_sub_menu = 'users' %}
+
 {% extends "::base.html.twig" %}
 
 {% block body %}
@@ -45,7 +48,7 @@
                     </tr>
                     <tr>
                         <th>Promotion</th>
-                        <td>[{{ user.promotion.code }}] {{ user.promotion.name }}</td>
+                        <td>{% if user.promotion is not null %}[{{ user.promotion.code }}] {{ user.promotion.name }}{% endif %}</td>
                     </tr>
                     <tr>
                         <th>Rôles</th>

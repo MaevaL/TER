@@ -1,6 +1,7 @@
+{% set sidebar_active = 'profile' %}
+
 {% extends "::base.html.twig" %}
 
-
 {% block body %}
-{% include "UserBundle:Profile:show_content.html.twig" %}
+    {% include "UserBundle:Profile:show_content.html.twig" %}
 {% endblock %}

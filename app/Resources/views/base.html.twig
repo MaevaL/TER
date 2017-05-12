@@ -60,36 +60,44 @@
 
                     {% block sidebar %}
 
+                        {% if sidebar_active is not defined %}
+                            {% set sidebar_active = 'null' %}
+                        {% endif %}
+
+                        {% if sidebar_active_sub_menu is not defined %}
+                            {% set sidebar_active_sub_menu = 'null' %}
+                        {% endif %}
+
                         <li class="mt">
-                            <a class="active" href="{{ path('app_panel') }}">
+                            <a {% if sidebar_active == 'home' %}class="active"{% endif %} href="{{ path('app_panel') }}">
                                 <i class="fa fa-home" aria-hidden="true"></i>
                                 <span>Accueil</span>
                             </a>
                         </li>
                         <li class="sub-menu">
-                            <a href="{{ path('fos_user_profile_show') }}">
+                            <a {% if sidebar_active == 'profile' %}class="active"{% endif %} href="{{ path('fos_user_profile_show') }}">
                                 <i class="fa fa-user" aria-hidden="true"></i>
-                                <span>Profile</span>
+                                <span>Profil</span>
                             </a>
                         </li>
 
                         {% if is_granted("ROLE_SUPER_ADMIN") %}
                             <li class="sub-menu">
-                                <a href="javascript:;" >
+                                <a {% if sidebar_active == 'admin' %}class="active"{% endif %} href="javascript:;" >
                                     <i class="fa fa-user" aria-hidden="true"></i>
                                     <span>Administration</span>
                                 </a>
                                 <ul class="sub">
-                                    <li><a  href="{{ path('user_index') }}">Gestion des utilisateurs</a></li>
-                                    <li><a  href="{{ path('promotion_index') }}">Gestion des promotions</a></li>
-                                    <li><a  href="{{ path('ue_index') }}">Gestion des UEs</a></li>
+                                    <li><a {% if sidebar_active_sub_menu == 'users' %}class="active"{% endif %}  href="{{ path('user_index') }}">Gestion des utilisateurs</a></li>
+                                    <li><a {% if sidebar_active_sub_menu == 'promotion' %}class="active"{% endif %} href="{{ path('promotion_index') }}">Gestion des promotions</a></li>
+                                    <li><a {% if sidebar_active_sub_menu == 'ues' %}class="active"{% endif %} href="{{ path('ue_index') }}">Gestion des UEs</a></li>
                                 </ul>
                             </li>
                         {% endif %}
 
                         {% if is_granted("ROLE_ADMIN") %}
                             <li class="sub-menu">
-                                <a href="{{ path('teacher_panel') }}">
+                                <a {% if sidebar_active == 'teacher' %}class="active"{% endif %} href="{{ path('teacher_panel') }}">
                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                     <span>Gestion des notes</span>
                                 </a>

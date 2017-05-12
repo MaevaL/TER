@@ -5,10 +5,13 @@ parameters:
     database_name: ter
     database_user: root
     database_password: null
-    mailer_transport: smtp
+    mailer_transport: mail
     mailer_host: 127.0.0.1
-    mailer_user: null
-    mailer_password: null
+    mailer_user: adresse gmail
+    mailer_password: mot de passe gmail
     secret: 7e9809178aa71ecfd0c605cb66437bf7d027e1b2
 
     session_max_idle_time: 1800
+    mailer_from:
+        email: ter@exemple.com
+        name: Contact TER

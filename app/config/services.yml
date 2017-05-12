@@ -4,9 +4,13 @@ parameters:
     #parameter_name: value
 
 services:
+    app.mailer_service:
+        class:    AppBundle\Service\MailerService
+        arguments: ['@swiftmailer.mailer', '%mailer_from%']
+
     app.rsa_key_manager:
         class:    AppBundle\Service\RSAKeyManager
-        arguments: []
+        arguments: ['@doctrine.orm.entity_manager']
 
     app.csvtoarray:
         class: AppBundle\Service\CSVToArray
@@ -18,7 +22,13 @@ services:
 
     user.login_success_handler:
         class: UserBundle\Handler\AuthenticationSuccessHandler
-        arguments: ["@router"]
+        arguments: ["@router", '@app.rsa_key_manager']
+
+    user.password_resetting_success_listener:
+        class: UserBundle\EventListener\PasswordResettingListener
+        arguments: ['@router', '@app.rsa_key_manager', '@security.token_storage', '@session']
+        tags:
+            - { name: kernel.event_subscriber }
 
     user.session_idle_handler:
         class: UserBundle\Handler\SessionIdleHandler

@@ -61,19 +61,14 @@ class ChangePasswordController extends cpc {
             //var_dump($request->get("fos_user_change_password_form")["current_password"]);
 
 
-            $rsa = $this->get("app.rsa_key_manager");
-
             $event = new FormEvent($form, $request);
             $dispatcher->dispatch(FOSUserEvents::CHANGE_PASSWORD_SUCCESS, $event);
 
-            $key = $rsa->decryptByPassword($user->getPrivateKey(),$request->get("fos_user_change_password_form")["current_password"]);
-            $key = $rsa->cryptByPassword($key, $user->getPlainPassword());
-
-            $user->setPrivateKey($key);
+            //Changement du mot de passe de la clé privée
+            $userManagerService = $this->get('app.user_manager');
+            $userManagerService->updatePrivateKeyPassword($user, $request->get("fos_user_change_password_form")["current_password"], $user->getPlainPassword());
 
             $userManager->updateUser($user);
-
-
 
             if (null === $response = $event->getResponse()) {
                 $url = $this->generateUrl('fos_user_profile_show');
