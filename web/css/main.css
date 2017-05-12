@@ -392,6 +392,10 @@ ul.sidebar-menu li ul.sub li a:hover {
   color: white;
   background: transparent;
 }
+ul.sidebar-menu li ul.sub li a.active {
+  background: inherit;
+  color: white;
+}
 ul.sidebar-menu li ul.sub li.active a {
   color: #68dff0;
   -webkit-transition: all 0.3s ease;
