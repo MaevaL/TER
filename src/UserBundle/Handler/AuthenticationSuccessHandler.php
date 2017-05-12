@@ -15,6 +15,7 @@ class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterf
      * @var Router
      */
     protected $router;
+    private  $RSAKeyManager = null;
 
     /**
      * Initialize authentication
@@ -23,9 +24,10 @@ class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterf
      *
      * @return void
      */
-    public function __construct(Router $router)
+    public function __construct(Router $router, RSAKeyManager $RSAKeyManager)
     {
         $this->router = $router;
+        $this->RSAKeyManager = $RSAKeyManager;
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
@@ -33,8 +35,7 @@ class AuthenticationSuccessHandler implements AuthenticationSuccessHandlerInterf
         $user = $token->getUser();
         $password = $request->get('_password');
 
-        $rsaManager = new RSAKeyManager();
-        $privateKey = $rsaManager->getUserPrivateKey($user, $password);
+        $privateKey = $this->RSAKeyManager->getUserPrivateKey($user, $password);
 
         $session = $request->getSession();
         $session->set('userPrivateKey', $privateKey);

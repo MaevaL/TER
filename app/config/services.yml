@@ -10,7 +10,7 @@ services:
 
     app.rsa_key_manager:
         class:    AppBundle\Service\RSAKeyManager
-        arguments: []
+        arguments: ['@doctrine.orm.entity_manager']
 
     app.csvtoarray:
         class: AppBundle\Service\CSVToArray
@@ -22,7 +22,7 @@ services:
 
     user.login_success_handler:
         class: UserBundle\Handler\AuthenticationSuccessHandler
-        arguments: ["@router"]
+        arguments: ["@router", '@app.rsa_key_manager']
 
     user.session_idle_handler:
         class: UserBundle\Handler\SessionIdleHandler

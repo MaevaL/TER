@@ -3,19 +3,35 @@
 namespace AppBundle\Service;
 
 use AppBundle\Entity\Grade;
+use Doctrine\ORM\EntityManager;
 use Sinner\Phpseclib\Crypt\Crypt_RSA;
 use UserBundle\Entity\User;
 
 class RSAKeyManager
 {
+    private $em = null;
+
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
+
     /*
      * Fonction qui génère et sauvegarde les clés RSA d'un utilisateur
      */
     public function generateUserKeys(User $user) {
         $crypt_rsa = new Crypt_RSA();
-        $keys = $crypt_rsa->createKey();
+        $userRepository = $this->em->getRepository('UserBundle:User');
 
-        //TODO : Vérifier que la clé est unique
+        do {
+            $keys = $crypt_rsa->createKey();
+
+            //Recherche si une clef existe déjà
+            $found = $userRepository->findBy(array(
+                'publicKey' => $keys['publickey'],
+            ));
+        } while ($found != null);
+
         $user->setPublicKey($keys['publickey']);
 
         if($user->isEnabled())
