@@ -14,6 +14,7 @@
 !var/SymfonyRequirements.php
 /vendor/
 /web/bundles/
+/web/css/*
 
 
 # Created by https://www.gitignore.io/api/phpstorm
