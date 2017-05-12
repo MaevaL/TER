@@ -4,6 +4,10 @@ parameters:
     #parameter_name: value
 
 services:
+    app.mailer_service:
+        class:    AppBundle\Service\MailerService
+        arguments: ['@swiftmailer.mailer', '%mailer_from%']
+
     app.rsa_key_manager:
         class:    AppBundle\Service\RSAKeyManager
         arguments: []

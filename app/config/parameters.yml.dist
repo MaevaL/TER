@@ -12,3 +12,6 @@ parameters:
     secret: 7e9809178aa71ecfd0c605cb66437bf7d027e1b2
 
     session_max_idle_time: 1800
+    mailer_from:
+        email: ter@exemple.com
+        name: Contact TER
