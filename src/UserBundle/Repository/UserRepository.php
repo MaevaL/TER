@@ -41,4 +41,21 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    /**
+     * @param string $role
+     *
+     * @return array
+     */
+    public function findUsersPasswordRequest()
+    {
+        $qb = $this->_em->createQueryBuilder();
+        $qb->select('u')
+            ->from($this->_entityName, 'u')
+            ->where('u.passwordRequestedAt IS NOT NULL')
+            ->orderBy('u.passwordRequestedAt', 'ASC');
+            ;
+
+        return $qb->getQuery()->getResult();
+    }
 }
