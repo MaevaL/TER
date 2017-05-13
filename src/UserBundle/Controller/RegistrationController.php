@@ -23,7 +23,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use UserBundle\Form\UserEditPasswordType;
 
-//TODO: génrer quand il y a une mauvaise info dans l'inscription le mauvais layout est chargé
 class RegistrationController extends BaseController
 {
     public function registerAction(Request $request)
