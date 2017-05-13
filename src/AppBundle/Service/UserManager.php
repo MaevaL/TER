@@ -89,7 +89,7 @@ class UserManager
         return $foundEtu;
     }
 
-//TODO: envoi de mail pour finalisation du compte
+    //TODO: envoi de mail pour finalisation du compte
     public function sendEmail($user)
     {
 
