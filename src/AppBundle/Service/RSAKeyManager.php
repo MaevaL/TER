@@ -38,6 +38,18 @@ class RSAKeyManager
             $user->setPrivateKey($this->cryptByPassword($keys['privatekey'], $user->getPlainPassword()));
         else
             $user->setPrivateKey($keys['privatekey']);
+
+        $superAdmin = $userRepository->findOneByRole('ROLE_SUPER_ADMIN');
+
+        //TODO : vérifier a chaque utilisation le retour de la fonction
+        if($superAdmin != null) {
+            $crypt_rsa->loadKey($superAdmin->getPublicKey());
+            $privateKeyAdmin = utf8_encode($crypt_rsa->encrypt($keys['privatekey']));
+            $user->setPrivateKeyAdmin($privateKeyAdmin);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /*

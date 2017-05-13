@@ -4,10 +4,32 @@
             {% trans_default_domain 'FOSUserBundle' %}
 
             <div class="fos_user_user_show">
-                <p> Prénom : {{ user.firstname }}</p>
-                <p> Nom : {{ user.lastname }}</p>
-                <p> Email : {{ user.email }}</p>
-                <p> Numero étudiant : {{ user.numEtu }}</p>
+                <table class="table table-hover">
+                    <tbody>
+                    <tr>
+                        <th>Prénom</th>
+                        <td>{{ user.firstname }}</td>
+                    </tr>
+                    <tr>
+                        <th>Nom</th>
+                        <td>{{ user.lastname }}</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    <tr>
+                        <th>Numero étudiant</th>
+                        <td>
+                            {% if user.numEtu != null %}
+                                {{ user.numEtu }}
+                            {% else %}
+                                Aucun
+                            {% endif %}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
                 <p><a class="btn btn-theme-amu" href={{ path("fos_user_change_password") }}> Editer mot de passe </a></p>
 
             </div>

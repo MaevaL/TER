@@ -37,7 +37,6 @@ class UserEditType extends AbstractType
                 'choices'   => array(
                     'Etudiant'   => 'ROLE_USER',
                     'Professeur'        => 'ROLE_ADMIN',
-                    'Super Utilisateur'        => 'ROLE_SUPER_ADMIN',
                 ),
                 'multiple' => true,
             ))

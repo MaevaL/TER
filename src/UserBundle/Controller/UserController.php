@@ -2,6 +2,7 @@
 
 namespace UserBundle\Controller;
 
+use Sinner\Phpseclib\Crypt\Crypt_RSA;
 use UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -25,7 +26,8 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $users = $em->getRepository('UserBundle:User')->findAll();
+        //Ne récupère pas le super admin
+        $users = $em->getRepository('UserBundle:User')->findNonSuperAdmin();
 
         return $this->render('UserBundle:user:index.html.twig', array(
             'users' => $users,
@@ -117,6 +119,9 @@ class UserController extends Controller
      */
     public function showAction(User $user)
     {
+        if($user->hasRole('ROLE_SUPER_ADMIN'))
+            throw $this->createNotFoundException('Utilisateur Introuvable');
+
         $deleteForm = $this->createDeleteForm($user);
 
         return $this->render('UserBundle:user:show.html.twig', array(
@@ -133,6 +138,9 @@ class UserController extends Controller
      */
     public function editAction(Request $request, User $user)
     {
+        if($user->hasRole('ROLE_SUPER_ADMIN'))
+            throw $this->createNotFoundException('Utilisateur Introuvable');
+
         $editForm = $this->createForm('UserBundle\Form\UserEditType', $user);
         $editForm->handleRequest($request);
 
@@ -160,11 +168,25 @@ class UserController extends Controller
      */
     public function editPasswordAction(Request $request, User $user)
     {
+        if($user->hasRole('ROLE_SUPER_ADMIN'))
+            throw $this->createNotFoundException('Utilisateur Introuvable');
+
         $editForm = $this->createForm('UserBundle\Form\UserEditPasswordType', $user);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $user->setUsername($user->getEmail());
+            $session = $this->get('session');
+            $adminPrivateKey = $session->get('userPrivateKey');
+
+            $userPrivateKey = utf8_decode($user->getPrivateKeyAdmin());
+            $crypt_rsa = new Crypt_RSA();
+            $crypt_rsa->loadKey($adminPrivateKey);
+            $userPrivateKey = $crypt_rsa->decrypt($userPrivateKey);
+
+            $rsa = $this->get('app.rsa_key_manager');
+            $userPrivateKey = utf8_encode($rsa->cryptByPassword($userPrivateKey, $user->getPlainPassword()));
+
+            $user->setPrivateKey($userPrivateKey);
 
             $userManager = $this->get('fos_user.user_manager');
             $userManager->updateUser($user);
@@ -187,6 +209,9 @@ class UserController extends Controller
      */
     public function deleteAction(Request $request, User $user)
     {
+        if($user->hasRole('ROLE_SUPER_ADMIN'))
+            throw $this->createNotFoundException('Utilisateur Introuvable');
+
         $form = $this->createDeleteForm($user);
         $form->handleRequest($request);
 
