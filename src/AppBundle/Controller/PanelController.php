@@ -14,28 +14,6 @@ class PanelController extends Controller
      */
     public function panelAction(Request $request)
     {
-        $mailer_service = $this->get("app.mailer_service");
-        $error = $mailer_service->sendEmail(array(
-            'subject' => "sblup",
-            'to' => "maeva.lauzier@gmail.com",
-            'content' => $this->renderView("AppBundle:Mail:template.html.twig", array(
-                'content' => 'content',
-                'subject' => 'subject',
-                'user' => $this->getUser(),
-
-            )),
-        ));
-
-
-
-
-
-
-
-
-
-
-
         $session = $this->get('session');
         $userPrivateKey = $session->get('userPrivateKey');
 

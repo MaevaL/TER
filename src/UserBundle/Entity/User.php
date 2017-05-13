@@ -81,6 +81,13 @@ class User extends BaseUser
      */
     private $promotion;
 
+    /**
+     * @var string $numEtu
+     *
+     * @ORM\Column(name="activationToken", type="string",length=255, nullable=true)
+     */
+    protected $activationToken;
+
     public function __construct()
     {
         parent::__construct();
@@ -286,5 +293,29 @@ class User extends BaseUser
     public function getPromotion()
     {
         return $this->promotion;
+    }
+
+    /**
+     * Set activationToken
+     *
+     * @param string $activationToken
+     *
+     * @return User
+     */
+    public function setActivationToken($activationToken)
+    {
+        $this->activationToken = $activationToken;
+
+        return $this;
+    }
+
+    /**
+     * Get activationToken
+     *
+     * @return string
+     */
+    public function getActivationToken()
+    {
+        return $this->activationToken;
     }
 }

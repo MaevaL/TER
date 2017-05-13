@@ -32,6 +32,16 @@ class RSAKeyManager
             ));
         } while ($found != null);
 
+       //setActivationToken
+        do{
+            $activationToken = bin2hex(random_bytes(16));
+            $existToken = $userRepository->findOneBy(array(
+                'activationToken' => $activationToken,
+            ));
+
+        }while($existToken != null);
+        $user->setActivationToken($activationToken);
+
         $user->setPublicKey($keys['publickey']);
 
         if($user->isEnabled())

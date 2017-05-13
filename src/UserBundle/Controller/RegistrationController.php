@@ -94,7 +94,7 @@ class RegistrationController extends BaseController
     /**
      * Lists all user entities.
      *
-     * @Route("/account/register/{email}", name="user_registration")
+     * @Route("/account/register/{activationToken}", name="user_registration")
      * @Method({"GET","POST"})
      */
     public function userRegistrationAction(Request $request, User $user)
@@ -112,6 +112,7 @@ class RegistrationController extends BaseController
             $userService->updatePrivateKeyPassword($user, null, $password);
             $user->setPlainPassword($password);
             $user->setEnabled(true);
+            $user->setActivationToken(null);
             $um = $this->get('fos_user.user_manager');
             $um->updateUser($user);
 
