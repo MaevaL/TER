@@ -4,6 +4,7 @@ namespace UserBundle\Form;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -27,17 +28,14 @@ class UserEditPasswordType extends AbstractType
                 'first_options'  => array('label' => 'Mot de passe'),
                 'second_options' => array('label' => 'Vérification du mot de passse'),
             ))
+            ->add('sendEmail', CheckboxType::class, array(
+                'label' => "Envoyer un mail à l'utilisateur ?",
+                'required' => false,
+                'attr' => array(
+                    'checked' => true,
+                ),
+            ))
         ;
-    }
-    
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(array(
-            'data_class' => 'UserBundle\Entity\User'
-        ));
     }
 
     /**
@@ -45,7 +43,7 @@ class UserEditPasswordType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'userbundle_user';
+        return 'user_change_password';
     }
 
 

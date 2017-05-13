@@ -171,7 +171,7 @@ class UserController extends Controller
         if($user->hasRole('ROLE_SUPER_ADMIN'))
             throw $this->createNotFoundException('Utilisateur Introuvable');
 
-        $editForm = $this->createForm('UserBundle\Form\UserEditPasswordType', $user);
+        $editForm = $this->createForm('UserBundle\Form\UserEditPasswordType');
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -183,13 +183,21 @@ class UserController extends Controller
             $crypt_rsa->loadKey($adminPrivateKey);
             $userPrivateKey = $crypt_rsa->decrypt($userPrivateKey);
 
+            $user->setPlainPassword($editForm->getData()['plainPassword']);
+
             $rsa = $this->get('app.rsa_key_manager');
             $userPrivateKey = utf8_encode($rsa->cryptByPassword($userPrivateKey, $user->getPlainPassword()));
 
             $user->setPrivateKey($userPrivateKey);
+            $user->setPasswordRequestedAt(null);
+            $user->setEnabled(true);
 
             $userManager = $this->get('fos_user.user_manager');
             $userManager->updateUser($user);
+
+            if($editForm->getData()['sendEmail']) {
+                //TODO : envoyer un mail au propriétaire du compte
+            }
 
             $this->addFlash('success', "Le mot de passe de l'utilisateur a bien été édité !");
             return $this->redirectToRoute('user_index');

@@ -91,7 +91,8 @@
                                     <li><a {% if sidebar_active_sub_menu == 'users' %}class="active"{% endif %}  href="{{ path('user_index') }}">Gestion des utilisateurs</a></li>
                                     <li><a {% if sidebar_active_sub_menu == 'promotion' %}class="active"{% endif %} href="{{ path('promotion_index') }}">Gestion des promotions</a></li>
                                     <li><a {% if sidebar_active_sub_menu == 'ues' %}class="active"{% endif %} href="{{ path('ue_index') }}">Gestion des UEs</a></li>
-                                    <li><a {% if sidebar_active_sub_menu == 'passwordRequests' %}class="active"{% endif %} href="{{ path('admin_password_requests') }}">Demande de MDP</a></li>
+                                    {% set totalRequests = totalPasswordRequests() %}
+                                    <li><a {% if sidebar_active_sub_menu == 'passwordRequests' %}class="active"{% endif %} href="{{ path('admin_password_requests') }}">{% if totalRequests > 0 %}<span class="badge">{{ totalRequests }}</span> {% endif %}Demande de MDP</a></li>
                                 </ul>
                             </li>
                         {% endif %}

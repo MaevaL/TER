@@ -35,3 +35,11 @@ services:
         arguments: ["@session", "@security.token_storage", "@router", %session_max_idle_time%]
         tags:
             - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    #Twig Services
+    app.twig_extension:
+        class: AppBundle\Twig\AppExtension
+        arguments:
+          doctrine: "@doctrine.orm.entity_manager"
+        tags:
+            - { name: twig.extension }
