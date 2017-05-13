@@ -77,6 +77,9 @@
                                 <a class="btn btn-theme-amu" href="{{ path('user_show', { 'id': user.id }) }}"><i class="fa fa-search-plus" aria-hidden="true"></i></a>
                                 <a class="btn btn-success" href="{{ path('user_edit', { 'id': user.id }) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
                                 <a class="btn btn-warning" href="{{ path('user_edit_password', { 'id': user.id }) }}"><i class="fa fa-key" aria-hidden="true"></i></a>
+                                {% if user.enabled == false %}
+                                    <a class="btn btn-theme-amu" href="{{ path('user_send_activation_mail', {id: user.id}) }}">Envoyer Activation</a>
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}

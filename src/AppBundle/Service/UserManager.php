@@ -11,12 +11,14 @@ class UserManager
     private $rsaManager;
     private $entityManager;
     private $userManager;
+    private $mailerService;
 
-    public function __construct(RSAKeyManager $rsaManager, EntityManager $entityManager, $userManager)
+    public function __construct(RSAKeyManager $rsaManager, EntityManager $entityManager, $userManager, MailerService $mailerService)
     {
         $this->rsaManager = $rsaManager;
         $this->entityManager = $entityManager;
         $this->userManager = $userManager;
+        $this->mailerService = $mailerService;
     }
 
     public function updatePrivateKeyPassword(User $user, $oldPassword, $newPassword)
@@ -89,10 +91,9 @@ class UserManager
         return $foundEtu;
     }
 
-    //TODO: envoi de mail pour finalisation du compte
-    public function sendEmail($user)
+    public function sendEmail(User $user)
     {
-
+        $this->mailerService->sendActivation($user);
     }
 
 

@@ -33,14 +33,6 @@ class UserCreationType extends AbstractType
                 'label' => 'Numéro étudiant',
                 'required' => false,
             ))
-            ->add('plainPassword', RepeatedType::class, array(
-                'type' => PasswordType::class,
-                'invalid_message' => 'Les mots de passes doivent être identiques.',
-                'options' => array('attr' => array('class' => 'password-field')),
-                'required' => true,
-                'first_options'  => array('label' => 'Mot de passe'),
-                'second_options' => array('label' => 'Vérification du mot de passse'),
-            ))
             ->add('roles', ChoiceType::class, array(
                 'label' => "Rôle de l'utilisateur",
                 'choices'   => array(

@@ -3,6 +3,7 @@
 namespace AppBundle\Service;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Trt\SwiftCssInlinerBundle\Plugin\CssInlinerPlugin;
 use UserBundle\Entity\User;
 
@@ -75,7 +76,7 @@ class MailerService {
         $router = $this->container->get('router');
         $activationUrl = $router->generate('user_registration', array(
             'activationToken' => $user->getActivationToken(),
-        ));
+        ), UrlGeneratorInterface::ABSOLUTE_URL);
 
         $options = array(
             'subject' => $subject,
@@ -83,7 +84,7 @@ class MailerService {
             'content' => $this->container->get('templating')->render('AppBundle:Mail:template.html.twig', array(
                 'user' => $user,
                 'subject' => $subject,
-                'content' => "Afin de finaliser la création de votre compte veuillez cliquer sur le lien suivant : ".$activationUrl,
+                'content' => "Afin de finaliser la création de votre compte veuillez cliquer sur le lien suivant : <br><a href='".$activationUrl."'>".$activationUrl."</a>",
             )),
         );
 
