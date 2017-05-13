@@ -35,7 +35,7 @@ class UserManager
     {
         $foundEtu = $this->exist($newUser);
         if($foundEtu == null) {
-            //Création de l'étudiant
+                        //Création de l'étudiant
             $student = $this->userManager->createUser();
             $student->setEnabled(false);
             $student->setFirstname($newUser['firstname']);
@@ -94,5 +94,6 @@ class UserManager
     {
 
     }
+
 
 }
