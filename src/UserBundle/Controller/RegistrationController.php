@@ -18,6 +18,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use UserBundle\Entity\User;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use UserBundle\Form\UserEditPasswordType;
 
 //TODO: génrer quand il y a une mauvaise info dans l'inscription le mauvais layout est chargé
 class RegistrationController extends BaseController
@@ -83,6 +87,39 @@ class RegistrationController extends BaseController
         }
 
         return $this->render('UserBundle:Registration:register.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * Lists all user entities.
+     *
+     * @Route("/account/register/{email}", name="user_registration")
+     * @Method({"GET","POST"})
+     */
+    public function userRegistrationAction(Request $request, User $user)
+    {
+        if($user->isEnabled()){
+            throw $this->createNotFoundException("Page non trouvée");
+        }
+        $form = $this->createForm(UserEditPasswordType::class);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $userService = $this->get('app.user_manager');
+            $password = $form->getData()->getPlainPassword();
+            $userService->updatePrivateKeyPassword($user, null, $password);
+            $user->setPlainPassword($password);
+            $user->setEnabled(true);
+            $um = $this->get('fos_user.user_manager');
+            $um->updateUser($user);
+
+            $this->addFlash('success', 'Votre compte à bien été finalisé, veuillez vous connecter.');
+            return $this->redirectToRoute('fos_user_security_login');
+        }
+
+        return $this->render('UserBundle:Registration:setPassword.html.twig', array(
             'form' => $form->createView(),
         ));
     }

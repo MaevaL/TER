@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <style>
+        .nav {
+            padding-left : 10px;
+            padding-bottom: 0.05px;
+            padding-top: 0.05px;
+            background-color: #00CCFF;
+            color : #DCDCDC;
+        }
+        .fond {
+            background-color: #F2F2F2;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .content {
+            margin: 15px 10%;
+            padding: 15px;
+            width: 80%;
+
+            box-shadow: 1px 1px 1px #DCDCDC;
+            background-color: #FFFFFF;
+            text-align: justify;
+            word-break: normal;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <h1>{{ subject }}</h1>
+    </div>
+    <div class="fond">
+        <div class="content">
+            <p> Prénom : {{ user.firstname }} <br/>
+                Nom : {{ user.lastname }}</p>
+            <p>{{ content }}</p>
+        </div>
+    </div>
+</body>
+</html>

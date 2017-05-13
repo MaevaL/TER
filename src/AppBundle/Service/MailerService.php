@@ -2,6 +2,8 @@
 
 namespace AppBundle\Service;
 
+use Trt\SwiftCssInlinerBundle\Plugin\CssInlinerPlugin;
+
 class MailerService {
 
     private $mailer = null;
@@ -19,11 +21,16 @@ class MailerService {
             ->setSubject($options['subject'])
             ->setFrom(array($this->mailer_from['email'] => $this->mailer_from['name']))
             ->setTo($options['to'])
+            ->setContentType('text/html')
+            //->setBody('')
+
             ->setBody(
-                $options['content'],
-                'text/html'
+                $options['content']
             )
         ;
+        $message->getHeaders()->addTextHeader(
+            CssInlinerPlugin::CSS_HEADER_KEY_AUTODETECT
+        );
 
         return $this->mailer->send($message);
     }

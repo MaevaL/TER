@@ -22,8 +22,10 @@ class UserManager
     public function updatePrivateKeyPassword(User $user, $oldPassword, $newPassword)
     {
         $rsa = $this->rsaManager;
-
-        $key = $rsa->decryptByPassword($user->getPrivateKey(),$oldPassword);
+        if($oldPassword != null)
+            $key = $rsa->decryptByPassword($user->getPrivateKey(),$oldPassword);
+        else
+            $key = $user->getPrivateKey();
         $key = $rsa->cryptByPassword($key, $newPassword);
 
         $user->setPrivateKey($key);
