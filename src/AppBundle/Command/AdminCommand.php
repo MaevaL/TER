@@ -33,12 +33,20 @@ class AdminCommand extends Command {
         ]);
 
         $helper = $this->getHelper('question');
-        $question = new Question("Nom d'utilisateur [admin]:", 'admin');
+        $questionUsername = new Question("Nom d'utilisateur [admin]: ", 'admin');
+        $questionEmail = new Question("Email [null]: ", null);
 
-        $username = $helper->ask($input, $output, $question);
+        $username = $helper->ask($input, $output, $questionUsername);
 
-        $output->writeln("Nom d'utilisateur choisit : ".$username);
+        do {
+            $email = $helper->ask($input, $output, $questionEmail);
+        } while($email == null);
 
+        $output->writeln([
+            '',
+            "Nom d'utilisateur choisit : ".$username,
+            "Email choisie : ".$email,
+        ]);
 
         $em = $this->getApplication()->getKernel()->getContainer()->get('doctrine.orm.entity_manager');
         $userRepository = $em->getRepository('UserBundle:User');
@@ -59,7 +67,7 @@ class AdminCommand extends Command {
 
         $superAdmin = $userManager->createUser();
         $superAdmin->setEnabled(true);
-        $superAdmin->setEmail("admin@exemple.com");
+        $superAdmin->setEmail($email);
         $superAdmin->setFirstname("admin");
         $superAdmin->setLastname("admin");
         $superAdmin->addRole('ROLE_SUPER_ADMIN');

@@ -29,15 +29,17 @@
     </style>
 </head>
 <body>
-    <div class="nav">
-        <h1>{{ subject }}</h1>
+<div class="nav">
+    <h1>{{ subject }}</h1>
+</div>
+<div class="fond">
+    <div class="content">
+        {% if user is defined %}
+            <p>Prénom : {{ user.firstname }}</p>
+            <p>Nom : {{ user.lastname }}</p>
+        {% endif %}
+        <p>{{ content }}</p>
     </div>
-    <div class="fond">
-        <div class="content">
-            <p> Prénom : {{ user.firstname }} <br/>
-                Nom : {{ user.lastname }}</p>
-            <p>{{ content }}</p>
-        </div>
-    </div>
+</div>
 </body>
 </html>
