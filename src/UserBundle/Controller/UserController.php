@@ -183,10 +183,11 @@ class UserController extends Controller
             $crypt_rsa->loadKey($adminPrivateKey);
             $userPrivateKey = $crypt_rsa->decrypt($userPrivateKey);
 
-            $user->setPlainPassword($editForm->getData()['plainPassword']);
+            $newPassword = $editForm->getData()['plainPassword'];
+            $user->setPlainPassword($newPassword);
 
             $rsa = $this->get('app.rsa_key_manager');
-            $userPrivateKey = utf8_encode($rsa->cryptByPassword($userPrivateKey, $user->getPlainPassword()));
+            $userPrivateKey = utf8_encode($rsa->cryptByPassword($userPrivateKey, $newPassword));
 
             $user->setPrivateKey($userPrivateKey);
             $user->setPasswordRequestedAt(null);
@@ -196,7 +197,8 @@ class UserController extends Controller
             $userManager->updateUser($user);
 
             if($editForm->getData()['sendEmail']) {
-                //TODO : envoyer un mail au propriétaire du compte
+                $mailerService = $this->get('app.mailer_service');
+                $mailerService->sendPasswordMail($user, $newPassword);
             }
 
             $this->addFlash('success', "Le mot de passe de l'utilisateur a bien été édité !");

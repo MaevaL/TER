@@ -60,7 +60,8 @@ class AdminController extends Controller
         $user->setPasswordRequestedAt(null);
         $user->setEnabled(true);
 
-        //TODO: envoyer un mail avec le mdp
+        $mailerService = $this->get('app.mailer_service');
+        $mailerService->sendPasswordMail($user, $randomPassword);
 
         $userManager->updateUser($user);
 

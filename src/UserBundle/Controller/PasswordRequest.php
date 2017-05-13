@@ -46,7 +46,10 @@ class PasswordRequest extends Controller
                 $em->persist($user);
                 $em->flush();
 
-                //TODO : emvoyer un mail à l'administrateur
+                //Envoi d'un mail à l'administrateur
+                $admin = $userRepository->findOneByRole('ROLE_SUPER_ADMIN');
+                $mailerService = $this->get('app.mailer_service');
+                $mailerService->sendPasswordRequest($admin);
 
                 $this->addFlash('success', 'Votre demande a bien été enregistrée, un administrateur vous contactera afin de modifier votre mot de passe.');
                 return $this->redirectToRoute('fos_user_security_login');
