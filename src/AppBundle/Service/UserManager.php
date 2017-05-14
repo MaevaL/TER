@@ -31,11 +31,11 @@ class UserManager
         $user->setPrivateKey($key);
     }
 
-    public function addUserToBDD($newUser)
+    public function addStudentToBDD($newUser)
     {
         $foundEtu = $this->exist($newUser);
         if($foundEtu == null) {
-                        //Création de l'étudiant
+            //Création de l'étudiant
             $student = $this->userManager->createUser();
             $student->setEnabled(false);
             $student->setFirstname($newUser['firstname']);
@@ -61,7 +61,6 @@ class UserManager
             $student->setPromotion($promotion);
 
 
-            $student->setPlainPassword(uniqid());
             $this->rsaManager->generateUserKeys($student);
 
             $this->userManager->updateUser($student);
@@ -69,6 +68,30 @@ class UserManager
             $this->sendEmail($student);
             return $student;
         }
+    }
+
+    public function addProfToBDD($newUser)
+    {
+
+        //Création de l'enseignant
+        $prof = $this->userManager->createUser();
+        $prof->setEnabled(false);
+        $prof->setFirstname($newUser['firstname']);
+        $prof->setLastname($newUser['lastname']);
+        $prof->setEmail($newUser['email']);
+        $prof->setUsername($newUser['email']);
+        $prof->setPlainPassword(uniqid());
+        $prof->addRole("ROLE_ADMIN");
+
+        //TODO: gerer les UE affilié au profs
+
+        $this->rsaManager->generateUserKeys($prof);
+
+        $this->userManager->updateUser($prof);
+        $this->entityManager->flush();
+        $this->sendEmail($prof);
+        return $prof;
+
     }
 
     public function exist($newUser){

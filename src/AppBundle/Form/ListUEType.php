@@ -11,20 +11,12 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 
-class UserCSVType extends AbstractType
+class ListUEType extends AbstractType
 {
-    private $currentUser;
-    public function configureOptions(OptionsResolver $resolver) {
-        $resolver->setDefaults( [
-            'user' => null,
-        ] );
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->currentUser = $options['user'];
         $builder
-            ->add('usercsv', FileType::class, array(
+            ->add('listuecsv', FileType::class, array(
                 'label' => 'Fichier CSV',
                 'constraints' => array(new CSV())
             ));

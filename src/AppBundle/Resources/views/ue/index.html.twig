@@ -15,6 +15,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <a class="btn btn-success" href="{{ path('ue_new') }}"><i class="fa fa-user-plus" aria-hidden="true"></i> Ajouter une UE</a>
+                <a class="btn btn-success" href="{{ path('user_upload_teacher_list') }}"><i class="fa fa-user-plus" aria-hidden="true"></i>Ajouter une liste d'UE</a>
             </div>
         </div>
         <br>
@@ -37,7 +38,11 @@
                             <td>{{ uE.name }}</td>
                             <td>{{ uE.slug }}</td>
                             <td>{{ uE.credits }}</td>
-                            <td>[{{ uE.promotion.code }}] {{ uE.promotion.name }}</td>
+                            <td>
+                                {% if uE.promotion != null %}
+                                    [{{ uE.promotion.code }}] {{ uE.promotion.name }}
+                                {% endif %}
+                            </td>
                             <td>
                                 <a class="btn btn-theme-amu" href="{{ path('ue_show', { 'id': uE.id }) }}"><i class="fa fa-search-plus" aria-hidden="true"></i></a>
                                 <a class="btn btn-success" href="{{ path('ue_edit', { 'id': uE.id }) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
