@@ -2,19 +2,20 @@
 
 namespace AppBundle\Entity;
 
-use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * UE
+ * Classe qui représente une UE (Unitée d'Enseignement)
  *
  * @ORM\Table(name="ue")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UERepository")
+ *
+ * @package AppBundle\Entity
  */
 class UE
 {
     /**
-     * @var int
+     * @var int Identifiant de l'UE
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -23,27 +24,29 @@ class UE
     private $id;
 
     /**
-     * @var string
+     * @var string Nom de l'UE
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
 
     /**
-     * @var string
+     * @var string Code de l'UE
      *
-     * @ORM\Column(name="slug", type="string", length=255, nullable=true)
+     * @ORM\Column(name="code", type="string", length=255)
      */
-    private $slug;
+    private $code;
 
     /**
-     * @var int
+     * @var int Nombre de crédits de l'UE
      *
      * @ORM\Column(name="credits", type="integer", nullable=false)
      */
     private $credits;
 
     /**
+     * @var Promotion Promotion associée à l'UE
+     *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Promotion", cascade={"persist"}, inversedBy="ues")
      */
     private $promotion;
@@ -51,7 +54,7 @@ class UE
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -83,27 +86,27 @@ class UE
     }
 
     /**
-     * Set slug
+     * Set code
      *
-     * @param string $slug
+     * @param string $code
      *
      * @return UE
      */
-    public function setSlug($slug)
+    public function setCode($code)
     {
-        $this->slug = $slug;
+        $this->code = $code;
 
         return $this;
     }
 
     /**
-     * Get slug
+     * Get code
      *
      * @return string
      */
-    public function getSlug()
+    public function getCode()
     {
-        return $this->slug;
+        return $this->code;
     }
 
     /**
@@ -123,7 +126,7 @@ class UE
     /**
      * Get credits
      *
-     * @return int
+     * @return integer
      */
     public function getCredits()
     {

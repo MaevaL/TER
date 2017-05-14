@@ -38,7 +38,7 @@
             <p>Prénom : {{ user.firstname }}</p>
             <p>Nom : {{ user.lastname }}</p>
         {% endif %}
-        <p>{{ content }}</p>
+        <p>{{ content|raw }}</p>
     </div>
 </div>
 </body>

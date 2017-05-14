@@ -3,6 +3,7 @@
 namespace AppBundle\Service;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Trt\SwiftCssInlinerBundle\Plugin\CssInlinerPlugin;
 use UserBundle\Entity\User;
 
@@ -38,7 +39,6 @@ class MailerService {
     }
 
     public function sendPasswordMail(User $user, $password) {
-
         $subject = "Votre nouveau mot de passe";
 
         $options = array(
@@ -56,7 +56,6 @@ class MailerService {
     }
 
     public function sendPasswordRequest(User $user) {
-
         $subject = "Demande de nouveau mot de passe";
 
         $options = array(
@@ -71,4 +70,24 @@ class MailerService {
         return $this->sendEmail($options);
     }
 
+    public function sendActivation(User $user) {
+        $subject = "Activation de votre compte";
+
+        $router = $this->container->get('router');
+        $activationUrl = $router->generate('user_registration', array(
+            'activationToken' => $user->getActivationToken(),
+        ), UrlGeneratorInterface::ABSOLUTE_URL);
+
+        $options = array(
+            'subject' => $subject,
+            'to' => $user->getEmail(),
+            'content' => $this->container->get('templating')->render('AppBundle:Mail:template.html.twig', array(
+                'user' => $user,
+                'subject' => $subject,
+                'content' => "Afin de finaliser la création de votre compte veuillez cliquer sur le lien suivant : <br><a href='".$activationUrl."'>".$activationUrl."</a>",
+            )),
+        );
+
+        return $this->sendEmail($options);
+    }
 }

@@ -136,6 +136,8 @@ class UserController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user->setEnabled(false);
+            $user->setPlainPassword(uniqid());
             $user->setUsername($user->getEmail());
 
             $rsaKeyManager = $this->get('app.rsa_key_manager');
@@ -143,6 +145,10 @@ class UserController extends Controller
 
             $userManager = $this->get('fos_user.user_manager');
             $userManager->updateUser($user);
+
+            //Envoi du mail d'activation du compte
+            $mailerService = $this->get('app.mailer_service');
+            $mailerService->sendActivation($user);
 
             $this->addFlash('success', "L'utilisateur a bien été ajouté !");
             return $this->redirectToRoute('user_show', array('id' => $user->getId()));
@@ -294,5 +300,26 @@ class UserController extends Controller
         ;
     }
 
+    /**
+     * Send activation mail a user entity.
+     *
+     * @Route("/{id}/sendActivation", name="user_send_activation_mail")
+     * @Method("GET")
+     */
+    public function sendActivationAction(Request $request, User $user)
+    {
+        if($user->hasRole('ROLE_SUPER_ADMIN'))
+            throw $this->createNotFoundException('Utilisateur Introuvable');
 
+
+        if(!$user->isEnabled()) {
+            $mailerService = $this->get('app.mailer_service');
+            $mailerService->sendActivation($user);
+            $this->addFlash('success', "L'email d'activation a bien été envoyé à l'utilisateur.");
+        } else {
+            $this->addFlash('warning', "Ce compte utilisateur est déjà activé.");
+        }
+
+        return $this->redirectToRoute('user_index');
+    }
 }

@@ -32,8 +32,6 @@ class PasswordRequest extends Controller
             $em = $this->getDoctrine()->getManager();
             $userRepository = $em->getRepository('UserBundle:User');
 
-            //TODO : vérifier si l'utilisateur a fait la finalisation de son compte
-
             //Recherche si l'utilisateur existe
             $user = $userRepository->findOneBy(array(
                 'email' => $form->getData()['email'],
@@ -41,17 +39,28 @@ class PasswordRequest extends Controller
 
             //Il existe, on enregistre la demande et on désactive le compte
             if($user != null) {
-                $user->setPasswordRequestedAt(new \DateTime());
-                $user->setEnabled(false);
-                $em->persist($user);
-                $em->flush();
-
-                //Envoi d'un mail à l'administrateur
-                $admin = $userRepository->findOneByRole('ROLE_SUPER_ADMIN');
                 $mailerService = $this->get('app.mailer_service');
-                $mailerService->sendPasswordRequest($admin);
 
-                $this->addFlash('success', 'Votre demande a bien été enregistrée, un administrateur vous contactera afin de modifier votre mot de passe.');
+                //Le compte a déjà été finalisé
+                if($user->isEnabled()) {
+                    $user->setPasswordRequestedAt(new \DateTime());
+                    $user->setEnabled(false);
+                    $em->persist($user);
+                    $em->flush();
+
+                    //Envoi d'un mail à l'administrateur
+                    $admin = $userRepository->findOneByRole('ROLE_SUPER_ADMIN');
+                    $mailerService->sendPasswordRequest($admin);
+
+                    $this->addFlash('success', 'Votre demande a bien été enregistrée, un administrateur vous contactera afin de modifier votre mot de passe.');
+                }
+                //Le compte n'est pas finalisé envoi du mail de confirmation
+                else {
+                    $mailerService->sendActivation($user);
+
+                    $this->addFlash('success', "Votre compte n'a pas été finalisé, un mail permettant d'activer votre compte vous a été envoyé.");
+                }
+
                 return $this->redirectToRoute('fos_user_security_login');
             }
             //Il n'existe pas dans la base de données

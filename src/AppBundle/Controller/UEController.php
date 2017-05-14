@@ -3,60 +3,70 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\UE;
-use Cocur\Slugify\Slugify;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
- * Ue controller.
+ * Class UEController
+ * Fonctionnalités du super administrateur liées aux UEs
+ *
+ * @package AppBundle\Controller
  *
  * @Route("/admin/ue")
  */
 class UEController extends Controller
 {
     /**
-     * Lists all uE entities.
+     * Affichage de la liste de toutes les UEs
      *
      * @Route("/", name="ue_index")
      * @Method("GET")
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
     {
+        //Récupération de toutes les promotions
         $em = $this->getDoctrine()->getManager();
-
         $uEs = $em->getRepository('AppBundle:UE')->findAll();
 
+        //Affichage
         return $this->render('AppBundle:ue:index.html.twig', array(
             'uEs' => $uEs,
         ));
     }
 
     /**
-     * Creates a new uE entity.
+     * Création d'une nouvelle UE
      *
      * @Route("/new", name="ue_new")
      * @Method({"GET", "POST"})
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
     {
+        //Création de l'UE et du formulaire associé
         $uE = new Ue();
         $form = $this->createForm('AppBundle\Form\UEType', $uE);
+
+        //Récupération de la requête et vérifie si le formulaire est envoyé
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
+            //Sauvegarde de l'UE
             $em = $this->getDoctrine()->getManager();
-            $slugify = new Slugify();
-            $uE->setSlug($slugify->slugify($uE->getName()));
-
             $em->persist($uE);
             $em->flush();
 
+            //Redirection vers la fiche de l'UE
             $this->addFlash('success', "L'UE a bien été ajoutée !");
             return $this->redirectToRoute('ue_show', array('id' => $uE->getId()));
         }
 
+        //Affichage du formulaire
         return $this->render('AppBundle:ue:new.html.twig', array(
             'uE' => $uE,
             'form' => $form->createView(),
@@ -64,15 +74,20 @@ class UEController extends Controller
     }
 
     /**
-     * Finds and displays a uE entity.
+     * Affiche la fiche d'une UE si elle est trouvée
      *
      * @Route("/{id}", name="ue_show")
      * @Method("GET")
+     *
+     * @param UE $uE UE à afficher
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAction(UE $uE)
     {
+        //Création du formulaire de suppression pour le proposer sur l'affichage
         $deleteForm = $this->createDeleteForm($uE);
 
+        //Affichage de la fiche
         return $this->render('AppBundle:ue:show.html.twig', array(
             'uE' => $uE,
             'delete_form' => $deleteForm->createView(),
@@ -80,63 +95,74 @@ class UEController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing uE entity.
+     * Affichage d'un formulaire permettant l'édition d'une UE choisie
      *
      * @Route("/{id}/edit", name="ue_edit")
      * @Method({"GET", "POST"})
+     *
+     * @param Request $request
+     * @param UE $uE UE à éditer
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, UE $uE)
     {
-        $deleteForm = $this->createDeleteForm($uE);
+        //Création du formulaire d'édition de la promotion
         $editForm = $this->createForm('AppBundle\Form\UEType', $uE);
-        $editForm->handleRequest($request);
 
+        //Récupération de la requête et vérifie si le formulaire est envoyé
+        $editForm->handleRequest($request);
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $slugify = new Slugify();
-            $uE->setSlug($slugify->slugify($uE->getName()));
+            //Sauvegarde dans la base de données
             $this->getDoctrine()->getManager()->flush();
 
+            //Redirection vers la fiche de la promotion
             $this->addFlash('success', "L'UE a bien été éditée !");
-            return $this->redirectToRoute("ue_index");
+            return $this->redirectToRoute("ue_show", array('id' => $uE->getId()));
         }
 
+        //Affichage du formulaire
         return $this->render('AppBundle:ue:edit.html.twig', array(
             'uE' => $uE,
             'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
-     * Deletes a uE entity.
+     * Supprime l'UE passée en paramètre
      *
      * @Route("/{id}", name="ue_delete")
      * @Method("DELETE")
+     *
+     * @param Request $request
+     * @param UE $uE UE à supprimer
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteAction(Request $request, UE $uE)
     {
+        //Création du formulaire et récupération de la requête
         $form = $this->createDeleteForm($uE);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
+            //Suppresion de la promotion
             $em = $this->getDoctrine()->getManager();
             $em->remove($uE);
             $em->flush();
         }
 
+        //Redirection vers la liste des promotions avec un message de succès
         $this->addFlash('success', "L'UE a bien été supprimée !");
         return $this->redirectToRoute('ue_index');
     }
 
     /**
-     * Creates a form to delete a uE entity.
+     * Créé le formmulaire de suppression d'une promotion
      *
-     * @param UE $uE The uE entity
-     *
+     * @param UE $uE UE à laquelle on créé le formulaire
      * @return \Symfony\Component\Form\Form The form
      */
     private function createDeleteForm(UE $uE)
     {
+        //Création et renvoi du formulaire
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('ue_delete', array('id' => $uE->getId())))
             ->setMethod('DELETE')

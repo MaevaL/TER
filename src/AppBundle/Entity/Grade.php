@@ -2,18 +2,21 @@
 
 namespace AppBundle\Entity;
 
+use UserBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Grade
+ * Classe qui représente une note
  *
  * @ORM\Table(name="grade")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GradeRepository")
+ *
+ * @package AppBundle\Entity
  */
 class Grade
 {
     /**
-     * @var int
+     * @var int Identifiant de la note
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -22,32 +25,38 @@ class Grade
     private $id;
 
     /**
-     * @var string
+     * @var string Note (texte chiffrée avec les clés RSA) pour l'étudiant
      *
      * @ORM\Column(name="grade", type="text")
      */
     private $grade;
 
     /**
-     * @var string
+     * @var string Note (texte chiffrée avec les clés RSA) pour le professeur
      *
      * @ORM\Column(name="gradeTeacher", type="text")
      */
     private $gradeTeacher;
 
     /**
+     * @var User Etudiant à qui appartient la note
+     *
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
     private $student;
 
     /**
+     * @var User Professeur qui a ajouté la note
+     *
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
     private $teacher;
 
     /**
+     * @var GradeGroup Groupe de notes associé à la note
+     *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\GradeGroup", inversedBy="grades")
      * @ORM\JoinColumn(nullable=false, onDelete="cascade")
      */
