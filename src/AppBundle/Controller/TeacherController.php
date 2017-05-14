@@ -530,7 +530,7 @@ class TeacherController extends Controller
                 foreach ($notFounded as $newUser) {
                     //Création de l'étudiant
                     $newUser['idpromotion'] = $gradeGroup->getUe()->getPromotion()->getCode();
-                    $student = $userService->addUserToBDD($newUser);
+                    $student = $userService->addStudentToBDD($newUser);
 
                     //Récupération des clés RSA et sauvegarde de la note
                     $privateKey = $rsaManager->getUserPrivateKey($this->getUser(), $formPassword->getData()['password']);

@@ -35,7 +35,7 @@ class UserController extends Controller
     }
 
     /**
-     * Lists all user entities.
+     * Upload students.
      *
      * @Route("/uploadStudentList", name="user_upload_student_list")
      * @Method({"GET", "POST"})
@@ -70,13 +70,56 @@ class UserController extends Controller
 
             $userManager = $this->get("app.user_manager");
             foreach($data as $student)
-                $userManager->addUserToBDD($student);
+                $userManager->addStudentToBDD($student);
 
             $this->addFlash('succes', count($data)." étudiant(s) ont été ajoutés à la base de données.");
-            return $this->redirect('user_index');
+            return $this->redirectToRoute('user_index');
         }
 
         return $this->render('UserBundle:user:uploadStudentList.html.twig', array('form' => $form->createView()));
+
+    }
+
+    /**
+     * Upload teachers.
+     *
+     * @Route("/uploadTeacherList", name="user_upload_teacher_list")
+     * @Method({"GET", "POST"})
+     */
+    public function uploadProfListAction(Request $request)
+    {
+        $form = $this->createForm(UserCSVType::class);
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() & $form->isValid()) {
+            $file = $form->getData()['usercsv'];
+
+            //Sauvegarde temporaire du fichier
+            $filename = uniqid() . "." . $file->getClientOriginalExtension();
+            $path = __DIR__ . '/../../../web/upload';
+            $file->move($path, $filename);
+
+            //Analyse du fichier
+            $CSVToArray = $this->get('app.csvtoarray');
+            $data = $CSVToArray->convert($path . "/" . $filename, ',', array(
+                'lastname',
+                'firstname',
+                'email',
+                'ue'
+                ));
+
+            //Suppression du fichier après analyse
+            unlink($path . "/" . $filename);
+
+            $userManager = $this->get("app.user_manager");
+            foreach($data as $prof)
+                $userManager->addProfToBDD($prof);
+
+            $this->addFlash('succes', count($data)." enseignant(s) ont été ajoutés à la base de données.");
+            return $this->redirectToRoute('user_index');
+        }
+
+        return $this->render('UserBundle:user:uploadTeacherList.html.twig', array('form' => $form->createView()));
 
     }
 
