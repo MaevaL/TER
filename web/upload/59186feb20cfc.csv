@@ -1,0 +1,134 @@
+Code,Nom
+ENSISCU1,AU4 : Classification, apprentissage et décision
+ENSINCU40,Administration et alimentation de BD
+ENSINCU36,Administration système et réseau
+ENSINBU13,Algorithme à performance garantie
+ENSINCU23,Algorithmique des chaînes de caractères
+ENSINCU12,Algorithmique des graphes et réseaux
+ENSINBU9,Algorithmique distribuée
+ENSINCU16,Algorithmique distribuée 2
+ENSINCU1,Algorithmique et complexité
+ENSINBU5,Algorithmique et recherche opérationnelle
+ENSINCU73,Analyse et reporting
+ENSINBU1,Anglais
+ENSINCU27,Anglais 2
+ENSINCU22,Applications du Traitement Automatique de la Langue (TAL)
+ENSINCU58,Apprentissage automatique et classification
+ENSINCU7,Apprentissage numérique
+ENSINCU38,Architecture logicielle JEE
+ENSINCU44,Architecture logicielle JEE
+ENSINCU60,Architectures réparties - JEE
+ENSINAU12,BDR : approfondissement
+ENSINCU75,Business process
+ENSINCU24,Classification et phylogénie
+ENSINCU68,Cloud computing
+ENSINBU2,Communication
+ENSINCU28,Communication 2
+ENSINDU1,Communication scientifique
+ENSINAU2,Complexité
+ENSINCU43,Conception logicielle
+ENSINCU64,Développement d'applications mobiles
+ENSINCU72,Entrepôt de données et Big Data
+ENSINCU9,Entrepôts de données
+ENSINCU13,Espaces métriques : structure et algorithmiques
+ENSINCU29,Fiabilité logicielle 1
+ENSINCU33,Fiabilité logicielle 2
+ENSINAU9,Fondamentaux pour l'ingénierie des langues
+ENSINCU8,Fouille de bases de données
+ENSINCU49,Fouille de données (FD)
+ENSINCU10,Fouille de données avancée
+ENSINCU47,Gestion de projet
+ENSINCU65,Gestion de projet
+ENSINAU1,Génie Logiciel
+ENSINCU11,Géométrie discrète
+ENSISCU4,IM10 : Imagerie médicale
+ENSISCU5,IM11 : Modélisation algorithmique, différentielle et discrète
+ENSISCU6,IM12 : Analyse de vidéo et reconnaissance de forme
+ENSISCU7,IM13 : Vision industrielle
+ENSISCU8,IM14 : Modèles pour la production d'images : CAO et jeux vidéo
+ENSISCU55,IM15 : Modèles pour la production d'images, traitement et visualisation de données géométriques à haute-performance
+ENSISCU3,IM6 : Animation et simulation physique
+ENSISCU2,IM8 : Segmentation 2
+ENSINCU6,Inférence grammaticale
+ENSINBU11,Initiation à la fouille de données et à l'optimisation des SGBD
+ENSINDU2,Initiation à la recherche
+ENSINBU12,Intelligence artificielle
+ENSINCU74,Introduction au Big Data
+ENSINBU16,Introduction à l'apprentissage automatique
+ENSINCU39,Intégration des données
+ENSINBU10,Intégration des systèmes d'information
+ENSINCU2,Logique, automates et aspects formels de la théorie des langages
+ENSINCU15,Logiques et jeux
+ENSINCU26,Logiques non-standards
+ENSINCU18,Modèles du parallélisme
+ENSINCU19,Modèles et connaissances linguistiques pour le TAL
+ENSINCU25,Modèles markoviens
+ENSINCU21,Modèles numériques pour le TAL
+ENSINAU10,Modèles à évènements discrets
+ENSINCU53,Modélisation en RO
+ENSINCU37,Méthodes de développement
+ENSINCU50,Méthodologie de conception d'applications décisionnelles
+ENSINCU4,Nouveaux défis en apprentissage
+ENSINCU66,Nouvelles applications du Traitement Automatique de la Langue (TAL)
+ENSINCU14,Optimisation combinatoire et programmation en nombres entiers
+ENSINCU48,Optimisation linéaire
+ENSINAU7,Outils de l'internet
+ENSINCU30,Plateforme JEE
+ENSINAU13,Pratique de la cryptographie
+ENSINAU4,Programmation fonctionnelle
+ENSINAU6,Programmation logique
+ENSINBU15,Programmation parallèle
+ENSINBU6,Projet
+ENSINCU67,Projet d'entreprise
+ENSINDU3,Projet industriel de mise en application
+ENSINCU34,Qualité
+ENSINCU41,Qualité logicielle : outils et méthodes
+ENSISDU3,R bib : Étude bibliographique
+ENSISCU33,R2 : Communication et interaction homme-machine
+ENSISCU34,RE1 : Problématique, démarche, modèles et objects de conception
+ENSISCU35,RE2 : Modèles et objets de conception
+ENSISCU36,RE3 : Systèmes intelligents
+ENSISCU37,RE4 : Conception et architecture
+ENSISCU21,RI1 : Fondements logiques et algorithmiques
+ENSISCU22,RI2 : Fondements de programmation et de satisfiabilité
+ENSISCU23,RI3 : Représentation des connaissances : Approfondissement et applications
+ENSISCU24,RI4 : Planification, configuration et raisonnement temporel et spatial
+ENSISCU25,RI5 : Agents et ontologies pour les systèmes d'information et le web sémantique
+ENSISCU26,RI6 : Approches avancées de conception de systèmes d'information
+ENSISCU27,RI7 : Extraction et intégration d'information du web
+ENSISCU28,RI8 : Web services
+ENSISCU29,RIS1 : Traitement de données multimodales
+ENSISCU30,RIS2 : Formalismes à événements discrets
+ENSISCU31,RIS3 : Simulation distribuée et modèles hétérogènes
+ENSISCU32,RIS4 : Aide à la décision
+ENSISCU38,RO1 : Une UE extérieure de 3 crédits (validation requise)
+ENSISCU39,RO2 : Une UE extérieure de 6 crédits (validation requise)
+ENSISCU40,RS1 : Commande et diagnostic des systèmes complexes
+ENSISCU41,RS2 : Systèmes à structure variable et planification
+ENSISCU42,RS3 : Génie électrique et mécatronique
+ENSISCU43,RS4 : Pronostic des systèmes
+ENSISCU44,RS5 : Procédés à énergie renouvelable
+ENSISCU45,RS6 : Réseaux de neurones
+ENSISCU46,RS7 : Conduite et gestion de la production
+ENSISCU20,RTC : Concepts fondamentaux de la modélisation
+ENSINCU69,Recherche d'information
+ENSINCU59,Recherche et indexation des données multimédia
+ENSINCU54,Recherche locale
+ENSINAU3,Réseaux
+ENSINCU42,Spécification logicielle
+ENSINBU7,Stage de deux mois
+ENSISDU4,Stage de recherche
+ENSINDU4,Stage en entreprise
+ENSINCU3,Statistique inférentielle
+ENSINCU20,Syntaxe et sémantique : modèles et outils
+ENSINAU8,Système embarqué
+ENSINCU31,Systèmes hétérogènes
+ENSINCU35,Sécurité des systèmes embarqués
+ENSINCU32,Sécurité internet et réseau
+ENSINBU8,Sémantique
+ENSINCU45,Technologies du Web et Web 2.0
+ENSINCU5,Théorie de l'apprentissage
+ENSINCU56,Traitement automatique de la parole
+ENSINCU17,Vérification et sécurité
+ENSINBU4,XML
+ENSINCU46,XML avancé

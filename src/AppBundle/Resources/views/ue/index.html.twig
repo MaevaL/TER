@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <a class="btn btn-success" href="{{ path('ue_new') }}"><i class="fa fa-user-plus" aria-hidden="true"></i> Ajouter une UE</a>
-                <a class="btn btn-success" href="{{ path('user_upload_teacher_list') }}"><i class="fa fa-user-plus" aria-hidden="true"></i>Ajouter une liste d'UE</a>
+                <a class="btn btn-success" href="{{ path('user_upload_ue_list') }}"><i class="fa fa-user-plus" aria-hidden="true"></i>Ajouter une liste d'UE</a>
             </div>
         </div>
         <br>
@@ -26,7 +26,6 @@
                     <thead>
                     <tr>
                         <th>Nom</th>
-                        <th>Slug</th>
                         <th>Crédits</th>
                         <th>Promotion</th>
                         <th>Actions</th>
@@ -36,7 +35,6 @@
                     {% for uE in uEs %}
                         <tr>
                             <td>{{ uE.name }}</td>
-                            <td>{{ uE.slug }}</td>
                             <td>{{ uE.credits }}</td>
                             <td>
                                 {% if uE.promotion != null %}

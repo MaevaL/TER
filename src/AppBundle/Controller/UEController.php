@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\UE;
+use AppBundle\Form\ListUEType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -71,6 +72,55 @@ class UEController extends Controller
             'uE' => $uE,
             'form' => $form->createView(),
         ));
+    }
+
+
+    /**
+     * Upload teachers.
+     *
+     * @Route("/uploadUEList", name="user_upload_ue_list")
+     * @Method({"GET", "POST"})
+     */
+    public function uploadUEListAction(Request $request)
+    {
+        //TODO: verifier l'unicité du code de l'ue
+        $form = $this->createForm(ListUEType::class);
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() & $form->isValid()) {
+            $file = $form->getData()['listuecsv'];
+
+            //Sauvegarde temporaire du fichier
+            $filename = uniqid() . "." . $file->getClientOriginalExtension();
+            $path = __DIR__ . '/../../../web/upload';
+            $file->move($path, $filename);
+
+            //Analyse du fichier
+            $CSVToArray = $this->get('app.csvtoarray');
+            $data = $CSVToArray->convert($path . "/" . $filename, ',', array(
+                'code',
+                'name',
+            ));
+
+            //Suppression du fichier après analyse
+            unlink($path . "/" . $filename);
+            $em = $this->getDoctrine()->getManager();
+
+            foreach($data as $ueData) {
+                $ue = new UE();
+                $ue->setCode($ueData['code']);
+                $ue->setName(utf8_encode($ueData['name']));
+                $em->persist($ue);
+            }
+            //die;
+            $em->flush();
+
+            $this->addFlash('success', count($data)." UE(s) ont été ajoutées à la base de données.");
+            return $this->redirectToRoute('ue_index');
+        }
+
+        return $this->render('AppBundle:ue:ListUe.html.twig', array('form' => $form->createView()));
+
     }
 
     /**

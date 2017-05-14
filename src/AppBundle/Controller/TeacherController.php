@@ -567,7 +567,7 @@ class TeacherController extends Controller
      * Etape qui suit l'affichage du récapitulatif des opérations et de la sauvegarde
      * Affiche un rapport des opérations qui ont été effectuées
      *
-     * @Route("/addGradeFile/report", name="teacher_panel_add_grade_file_report"
+     * @Route("/addGradeFile/report", name="teacher_panel_add_grade_file_report")
      * @Method("GET")
      *
      * @param Request $request

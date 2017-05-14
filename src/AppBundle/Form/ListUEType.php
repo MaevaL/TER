@@ -1,5 +1,5 @@
 <?php
-namespace UserBundle\Form;
+namespace AppBundle\Form;
 
 use AppBundle\Validator\Constraints\CSV;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;

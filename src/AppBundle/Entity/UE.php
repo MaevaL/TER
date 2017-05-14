@@ -40,7 +40,7 @@ class UE
     /**
      * @var int Nombre de crédits de l'UE
      *
-     * @ORM\Column(name="credits", type="integer", nullable=false)
+     * @ORM\Column(name="credits", type="integer", nullable=true)
      */
     private $credits;
 
