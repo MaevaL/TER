@@ -2,25 +2,28 @@
 
 namespace UserBundle\Entity;
 
-use FOS\UserBundle\Model\User as BaseUser;
+use AppBundle\Entity\UE;
+use AppBundle\Entity\Promotion;
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
-use Sinner\Phpseclib\Crypt\Crypt_RSA;
-
 /**
- * User
+ * Classe qui représente un utilisateur
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="UserBundle\Repository\UserRepository")
  * @UniqueEntity("username")
  * @UniqueEntity("email")
  * @UniqueEntity("numEtu")
+ *
+ *
+ * @package UserBundle\Entity
  */
 class User extends BaseUser
 {
     /**
-     * @var int
+     * @var int Identificateur de l'utilisateur
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -29,65 +32,72 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @var string $publicKey
+     * @var string $publicKey Clé publique RSA
      *
      * @ORM\Column(name="publicKey", type="text", nullable=false)
      */
     private $publicKey;
 
     /**
-     * @var string $privateKey
+     * @var string $privateKey Clé privée RSA
      *
      * @ORM\Column(name="privateKey", type="text", nullable=false)
      */
     private $privateKey;
 
     /**
-     * @var string $privateKey
+     * @var string $privateKeyAdmin Clé privée RSA lisible par l'administrateur (pour le changement de mot de passe)
      *
      * @ORM\Column(name="privateKeyAdmin", type="text", nullable=true)
      */
     private $privateKeyAdmin;
 
     /**
-     * @var string $numEtu
+     * @var string $numEtu Numéro étudiant (si étudiant)
      *
      * @ORM\Column(name="numEtu", type="string",length=255, nullable=true)
      */
     protected $numEtu;
 
     /**
-     * @var string $firstname
+     * @var string $firstname Prénom de l'utilisateur
      *
      * @ORM\Column(name="firstname", type="string", length=255, nullable=true)
      */
     private $firstname;
 
     /**
-     * @var string $lastname
+     * @var string $lastname Nom de l'utilisateur
      *
      * @ORM\Column(name="lastname", type="string", length=255, nullable=true)
      */
     private $lastname;
 
     /**
+     * @var UE Liste des UEs associés (si professeur)
+     *
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\UE", cascade={"persist"})
      */
     private $ues;
 
     /**
+     * @var Promotion Promotion de l'étudiant (si étudiant)
+     *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Promotion", inversedBy="students")
      * @ORM\JoinColumn(nullable=true)
      */
     private $promotion;
 
     /**
-     * @var string $numEtu
+     * @var string $activationToken Token permettant l'activation et la finalisation du compte
      *
      * @ORM\Column(name="activationToken", type="string",length=255, nullable=true)
      */
     protected $activationToken;
 
+    /**
+     * User constructor.
+     */
     public function __construct()
     {
         parent::__construct();
