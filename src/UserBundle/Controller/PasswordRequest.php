@@ -32,8 +32,6 @@ class PasswordRequest extends Controller
             $em = $this->getDoctrine()->getManager();
             $userRepository = $em->getRepository('UserBundle:User');
 
-            //TODO : vérifier si l'utilisateur a fait la finalisation de son compte
-
             //Recherche si l'utilisateur existe
             $user = $userRepository->findOneBy(array(
                 'email' => $form->getData()['email'],

@@ -336,7 +336,6 @@ class TeacherController extends Controller
 
             //Recherche des étudiants listés dans le fichier
             $em = $this->getDoctrine()->getManager();
-            $userRepository = $em->getRepository('UserBundle:User');
             $userService = $this->get("app.user_manager");
             foreach ($data as $student) {
                 $foundEtu = $userService->exist($student);
@@ -417,6 +416,7 @@ class TeacherController extends Controller
                 $gradeGroup->setTeacher($this->getUser());
                 $gradeGroup->setName($session->get('intitule'));
                 $gradeGroup->setUe($ue);
+
 
                 $em->persist($gradeGroup);
 
