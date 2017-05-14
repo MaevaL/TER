@@ -3,17 +3,20 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use UserBundle\Entity\User;
 
 /**
- * Promotion
+ * Classe qui représente une promotion d'étudiants
  *
  * @ORM\Table(name="promotion")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\PromotionRepository")
+ *
+ * @package AppBundle\Entity
  */
 class Promotion
 {
     /**
-     * @var int
+     * @var int Identifiant de la promotion
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -22,29 +25,32 @@ class Promotion
     private $id;
 
     /**
-     * @var string
+     * @var string Nom de la promotion
      *
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
     /**
-     * @var string
+     * @var string Code de la promotion
      *
      * @ORM\Column(name="code", type="string", length=255)
      */
     private $code;
 
     /**
+     * @var UE Ues associées à la promotion
+     *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\UE", cascade={"persist"}, mappedBy="promotion")
      */
     private $ues;
 
     /**
+     * @var User Etudiants qui sont dans cette promotion
+     *
      * @ORM\OneToMany(targetEntity="UserBundle\Entity\User", mappedBy="promotion")
      */
     private $students;
-
 
     /**
      * Get id

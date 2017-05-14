@@ -3,17 +3,20 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use UserBundle\Entity\User;
 
 /**
- * GradeGroup
+ * Classe qui représente un groupe de notes
  *
  * @ORM\Table(name="grade_group")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\GradeGroupRepository")
+ *
+ * @package AppBundle\Entity
  */
 class GradeGroup
 {
     /**
-     * @var int
+     * @var int Identifiant du groupe de notes
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -22,38 +25,46 @@ class GradeGroup
     private $id;
 
     /**
-     * @var string
+     * @var string Nom du groupe de note
      *
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
     /**
+     * @var User Professeur à qui appartient le groupe de notes
+     *
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
      * @ORM\JoinColumn(nullable=false)
      */
     private $teacher;
 
     /**
+     * @var UE Ue associée au groupe de notes
+     *
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\UE")
      * @ORM\JoinColumn(nullable=false)
      */
     private $ue;
 
     /**
-     * @var \DateTime
+     * @var \DateTime Date de création du groupe d'UE
      *
      * @ORM\Column(name="date", type="datetime")
      */
     private $date;
 
     /**
+     * @var Grade Liste des notes du groupe de notes
+     *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Grade", mappedBy="gradeGroup")
      * @ORM\JoinColumn(nullable=false, onDelete="cascade")
      */
     private $grades;
 
-
+    /**
+     * GradeGroup constructor.
+     */
     public function __construct()
     {
         $this->date = new \DateTime();
