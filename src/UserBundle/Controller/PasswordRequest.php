@@ -2,33 +2,37 @@
 
 namespace UserBundle\Controller;
 
-use Sinner\Phpseclib\Crypt\Crypt_RSA;
-use UserBundle\Entity\User;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
-use UserBundle\Form\UserCSVType;
 use UserBundle\Form\UserPasswordRequestType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 /**
  * PasswordRequest controller.
+ * Permet à un utilisateur de signaler un mot de passe oublié et d'en demander un nouveau
  *
  * @Route("/")
+ *
+ * @package UserBundle\Controller
  */
 class PasswordRequest extends Controller
 {
     /**
-     * UserRequest a new password
+     * Formulaire de demande de nouveau mot de passe
      *
      * @Route("/password/request", name="password_request")
      * @Method({"GET", "POST"})
      */
     public function passwordRequestAction(Request $request)
     {
+        //Création du formulaire de demande de nouveau mot de passe
         $form = $this->createForm(UserPasswordRequestType::class);
 
+        //Récupération de la requête et vérifie si le formulaire est validé
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
+            //Récupération du repository Utilisateur
             $em = $this->getDoctrine()->getManager();
             $userRepository = $em->getRepository('UserBundle:User');
 
@@ -69,6 +73,7 @@ class PasswordRequest extends Controller
             }
         }
 
+        //Affichage du formulaire de demande de nouveau mot de passe
         return $this->render('UserBundle:PasswordRequest:request.html.twig', array(
             'form' => $form->createView(),
         ));
