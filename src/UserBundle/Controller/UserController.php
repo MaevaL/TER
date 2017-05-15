@@ -29,7 +29,7 @@ class UserController extends Controller
         //Ne récupère pas le super admin
         $users = $em->getRepository('UserBundle:User')->findNonSuperAdmin();
 
-        return $this->render('UserBundle:user:index.html.twig', array(
+        return $this->render('UserBundle:User:index.html.twig', array(
             'users' => $users,
         ));
     }
@@ -76,17 +76,17 @@ class UserController extends Controller
             return $this->redirectToRoute('user_index');
         }
 
-        return $this->render('UserBundle:user:uploadStudentList.html.twig', array('form' => $form->createView()));
+        return $this->render('UserBundle:User:uploadStudentList.html.twig', array('form' => $form->createView()));
 
     }
 
     /**
      * Upload teachers.
      *
-     * @Route("/uploadTeacherList", name="user_upload_teacher_list")
+     * @Route("/uploadTeacherList", name="user_upload_teachers_list")
      * @Method({"GET", "POST"})
      */
-    public function uploadProfListAction(Request $request)
+    public function uploadTeachersListAction(Request $request)
     {
         $form = $this->createForm(UserCSVType::class);
 
@@ -119,7 +119,7 @@ class UserController extends Controller
             return $this->redirectToRoute('user_index');
         }
 
-        return $this->render('UserBundle:user:uploadTeacherList.html.twig', array('form' => $form->createView()));
+        return $this->render('UserBundle:User:uploadTeacherList.html.twig', array('form' => $form->createView()));
 
     }
 
@@ -154,7 +154,7 @@ class UserController extends Controller
             return $this->redirectToRoute('user_show', array('id' => $user->getId()));
         }
 
-        return $this->render('UserBundle:user:new.html.twig', array(
+        return $this->render('UserBundle:User:new.html.twig', array(
             'user' => $user,
             'form' => $form->createView(),
         ));
@@ -203,7 +203,7 @@ class UserController extends Controller
             return $this->redirectToRoute('user_index');
         }
 
-        return $this->render('UserBundle:user:edit.html.twig', array(
+        return $this->render('UserBundle:User:edit.html.twig', array(
             'user' => $user,
             'edit_form' => $editForm->createView(),
         ));
@@ -254,7 +254,7 @@ class UserController extends Controller
             return $this->redirectToRoute('user_index');
         }
 
-        return $this->render('UserBundle:user:editPassword.html.twig', array(
+        return $this->render('UserBundle:User:editPassword.html.twig', array(
             'user' => $user,
             'edit_form' => $editForm->createView(),
         ));

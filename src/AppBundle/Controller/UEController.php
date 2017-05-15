@@ -34,7 +34,7 @@ class UEController extends Controller
         $uEs = $em->getRepository('AppBundle:UE')->findAll();
 
         //Affichage
-        return $this->render('AppBundle:ue:index.html.twig', array(
+        return $this->render('AppBundle:Ue:index.html.twig', array(
             'uEs' => $uEs,
         ));
     }
@@ -68,7 +68,7 @@ class UEController extends Controller
         }
 
         //Affichage du formulaire
-        return $this->render('AppBundle:ue:new.html.twig', array(
+        return $this->render('AppBundle:Ue:new.html.twig', array(
             'uE' => $uE,
             'form' => $form->createView(),
         ));
@@ -76,7 +76,7 @@ class UEController extends Controller
 
 
     /**
-     * Upload teachers.
+     * Upload d'un fichier CSV contenant une liste d'UEs
      *
      * @Route("/uploadUEList", name="user_upload_ue_list")
      * @Method({"GET", "POST"})
@@ -84,10 +84,11 @@ class UEController extends Controller
     public function uploadUEListAction(Request $request)
     {
         //TODO: verifier l'unicité du code de l'ue
+        //Création du formulaire et vérifie qu'il est correctement envoyé
         $form = $this->createForm(ListUEType::class);
-
         $form->handleRequest($request);
         if($form->isSubmitted() & $form->isValid()) {
+            //Récupération du fichier
             $file = $form->getData()['listuecsv'];
 
             //Sauvegarde temporaire du fichier
@@ -106,20 +107,25 @@ class UEController extends Controller
             unlink($path . "/" . $filename);
             $em = $this->getDoctrine()->getManager();
 
+            //Création des UEs
             foreach($data as $ueData) {
                 $ue = new UE();
                 $ue->setCode($ueData['code']);
                 $ue->setName(utf8_encode($ueData['name']));
                 $em->persist($ue);
             }
-            //die;
+            //Sauvegarde
             $em->flush();
 
+            //Redirection avec un message de succès
             $this->addFlash('success', count($data)." UE(s) ont été ajoutées à la base de données.");
             return $this->redirectToRoute('ue_index');
         }
 
-        return $this->render('AppBundle:ue:ListUe.html.twig', array('form' => $form->createView()));
+        //Affichage du formulaire
+        return $this->render('AppBundle:Ue:uploadUeList.html.twig', array(
+            'form' => $form->createView()
+        ));
 
     }
 
@@ -171,7 +177,7 @@ class UEController extends Controller
         }
 
         //Affichage du formulaire
-        return $this->render('AppBundle:ue:edit.html.twig', array(
+        return $this->render('AppBundle:Ue:edit.html.twig', array(
             'uE' => $uE,
             'edit_form' => $editForm->createView(),
         ));
