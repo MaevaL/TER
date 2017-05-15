@@ -1,0 +1,90 @@
+{% set sidebar_active = 'admin' %}
+{% set sidebar_active_sub_menu = 'users' %}
+
+{% extends "::base.html.twig" %}
+
+{% block body %}
+    <div class="showback">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3><i class="fa fa-angle-right"></i> Récapitulatif de l'importation</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                {% if addedUE != null %}
+                    <p>Les UE suivantes ont été ajouté : </p>
+                    <table id="recaptable" class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Nom de l'UE</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for ue in addedUE %}
+                            <tr>
+                                <th>{{ ue.code }}</th>
+                                <th>{{ ue.name }}</th>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                {% if notAddedUE != null %}
+                    <p>Les UE suivantes n'ont pas été ajouté :</p>
+                    <table id="recaptable-2" class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Nom de l'UE</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for ue in notAddedUE %}
+                            <tr>
+                                <th>{{ ue.code }}</th>
+                                <th>{{ ue.name }}</th>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+    <br>
+    <div class="row">
+        <div class="col-lg-12">
+            <a class="btn btn-theme-amu" href="{{ path('ue_index') }}"><i class="fa fa-caret-left" aria-hidden="true"></i> Retour à la gestion des UE</a>
+        </div>
+    </div>
+
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(function() {
+            $('#recaptable').DataTable({
+                "language": {
+                    "url": "{{ asset('vendor/dataTables/media/lang/French.json') }}"
+                }
+            });
+
+            $('#recaptable-2').DataTable({
+                "language": {
+                    "url": "{{ asset('vendor/dataTables/media/lang/French.json') }}"
+                }
+            });
+        });
+    </script>
+{% endblock %}

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\AppBundle;
 use AppBundle\Entity\UE;
 use AppBundle\Form\ListUEType;
 use Symfony\Component\HttpFoundation\Request;
@@ -83,7 +84,6 @@ class UEController extends Controller
      */
     public function uploadUEListAction(Request $request)
     {
-        //TODO: verifier l'unicité du code de l'ue
         //Création du formulaire et vérifie qu'il est correctement envoyé
         $form = $this->createForm(ListUEType::class);
         $form->handleRequest($request);
@@ -106,21 +106,40 @@ class UEController extends Controller
             //Suppression du fichier après analyse
             unlink($path . "/" . $filename);
             $em = $this->getDoctrine()->getManager();
-
+            $ueCount = 0;
+            $addedUE = array();
+            $notAddedUE = array();
             //Création des UEs
             foreach($data as $ueData) {
-                $ue = new UE();
-                $ue->setCode($ueData['code']);
-                $ue->setName(utf8_encode($ueData['name']));
-                $em->persist($ue);
+
+                $ueFounded = $em->getRepository('AppBundle:UE')->findOneBy(array(
+                    "code" => $ueData['code'],
+                ));
+                if($ueFounded == null) {
+                    $ue = new UE();
+                    $ue->setCode($ueData['code']);
+                    $ue->setName(utf8_encode($ueData['name']));
+                    $em->persist($ue);
+                    $ueCount += 1;
+                    $addedUE[] = $ue;
+                } else {
+                    $ue = new UE();
+                    $ue->setCode($ueData['code']);
+                    $ue->setName(utf8_encode($ueData['name']));
+                    $notAddedUE[] = $ue;
+                }
             }
             //Sauvegarde
             $em->flush();
 
             //Redirection avec un message de succès
-            $this->addFlash('success', count($data)." UE(s) ont été ajoutées à la base de données.");
-            return $this->redirectToRoute('ue_index');
+            $this->addFlash('success', $ueCount." UE(s) ont été ajoutées à la base de données.");
+            return $this->render("AppBundle:Ue:recapitulatif.html.twig", array(
+                "addedUE" => $addedUE,
+                "notAddedUE" => $notAddedUE,
+            ));
         }
+
 
         //Affichage du formulaire
         return $this->render('AppBundle:Ue:uploadUeList.html.twig', array(

@@ -40,7 +40,7 @@
                     </tr>
                     <tr>
                         <th>Promotion</th>
-                        <td>[{{ uE.promotion.code }}] {{ uE.promotion.name }}</td>
+                        <td>{% if uE.promotion != null %}[{{ uE.promotion.code }}] {{ uE.promotion.name }}{% endif %}</td>
                     </tr>
                     </tbody>
                 </table>

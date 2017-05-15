@@ -70,7 +70,7 @@ class AppExtension extends \Twig_Extension
 
     public function getGlobals()
     {
-
+        return array();
     }
 
 
