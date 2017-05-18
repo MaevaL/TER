@@ -472,7 +472,7 @@ class TeacherController extends Controller
         $notFounded = $session->get('notFounded');
 
         //Si aucune donnée retour au formulaire
-        if(!is_array($toAdd) || !is_array($notFounded)) {
+        if(!is_array($toAdd) || !is_array($notFounded) && ($toAdd != null || $notFounded != null)) {
             $this->addFlash('warning', "Une erreur est survenue lors de l'enregistrement des données.");
             return $this->redirectToRoute('teacher_panel_add_grade_file');
         }
