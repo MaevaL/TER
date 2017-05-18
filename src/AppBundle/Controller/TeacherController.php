@@ -529,7 +529,12 @@ class TeacherController extends Controller
                 $userService = $this->get("app.user_manager");
                 foreach ($notFounded as $newUser) {
                     //Création de l'étudiant
-                    $newUser['idpromotion'] = $gradeGroup->getUe()->getPromotion()->getCode();
+                    $promotion =  $gradeGroup->getUe()->getPromotion();
+                    if($promotion != null)
+                        $newUser['idpromotion'] = $promotion->getCode();
+                    else
+                        $newUser['idpromotion'] = null;
+
                     $student = $userService->addStudentToBDD($newUser);
 
                     //Récupération des clés RSA et sauvegarde de la note

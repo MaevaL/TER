@@ -93,7 +93,7 @@ class UserManager
             //Création de sa promotion si demmandé et qu'elle n'existe pas
             $promotionRepository = $this->entityManager->getRepository("AppBundle:Promotion");
             $promotion = $promotionRepository->findOneBy(array("code" => $newUser['idpromotion']));
-            if ($promotion == null) {
+            if ($promotion == null && $newUser['idpromotion'] != null) {
                 $promotion = new Promotion();
                 $promotion->setName($newUser['nompromotion']);
                 $promotion->setCode($newUser['idpromotion']);
