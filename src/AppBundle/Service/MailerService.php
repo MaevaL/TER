@@ -56,7 +56,9 @@ class MailerService {
         //content => Contenu de l'email (string/html)
 
         //Création du message
-        $message = \Swift_Message::newInstance()
+        $message = new \Swift_Message();
+
+        $message
             ->setSubject($options['subject'])
             ->setFrom(array($this->mailer_from['email'] => $this->mailer_from['name']))
             ->setTo($options['to'])
@@ -66,9 +68,10 @@ class MailerService {
             )
         ;
         //Activation du css
+        /*
         $message->getHeaders()->addTextHeader(
             CssInlinerPlugin::CSS_HEADER_KEY_AUTODETECT
-        );
+        );*/
 
         //Envoi
         return $this->mailer->send($message);

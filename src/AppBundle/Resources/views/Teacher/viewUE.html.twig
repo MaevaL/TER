@@ -22,8 +22,8 @@
 
         {% for groupResult in gradeGroupsDisplay %}
 			{% set group = groupResult.gradeGroup %}
-			{% set positive = groupResult.percent %}
-			{% set negative = 100 - positive %}
+			{% set positive = groupResult.percent|round(2, 'floor') %}
+			{% set negative = 100 - positive|round(2, 'floor') %}
             {% set positive_color = "#dff0d8" %}
             {% set negative_color = "#f2dede" %}
 			<a href="{{ path('teacher_panel_view_grade_group', {id: group.id}) }}">

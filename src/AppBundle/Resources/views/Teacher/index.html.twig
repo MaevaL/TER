@@ -29,8 +29,8 @@
 	<div class="row mt">
         {% for ueResults in uesDisplay %}
 			{% set ue = ueResults.ue %}
-            {% set positive = ueResults.percent %}
-            {% set negative = 100 - positive %}
+            {% set positive = ueResults.percent|round(2, 'floor') %}
+            {% set negative = 100 - positive|round(2, 'floor') %}
             {% set positive_color = "#dff0d8" %}
             {% set negative_color = "#f2dede" %}
 			<a href="{{ path('teacher_panel_view_ue', {id: ue.id}) }}">

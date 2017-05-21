@@ -96,7 +96,7 @@ class UserController extends Controller
     /**
      * Cherche et affiche la fiche un utilisateur donnée en paramètre
      *
-     * @Route("/{id}", name="user_show")
+     * @Route("/view/{id}", name="user_show")
      * @Method("GET")
      *
      * @param User $user Utilisateur à afficher
