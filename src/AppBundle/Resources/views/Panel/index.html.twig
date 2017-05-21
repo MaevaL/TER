@@ -36,7 +36,7 @@
                     {% for grade in grades %}
 						<tr>
 							<td>{{ grade.date|date('d/m/Y | H:i') }}</td>
-							<td>{{ grade.ue.promotion.name }}</td>
+							<td>{% if grade.ue.promotion != null %}{{ grade.ue.promotion.name }}{% endif %}</td>
 							<td>{{ grade.ue.name }}</td>
 							<td>{{ grade.intitule }}</td>
 							<td class="{% if grade.grade > 10 %}success{% else %}danger{% endif %}">{{ grade.grade }}</td>
